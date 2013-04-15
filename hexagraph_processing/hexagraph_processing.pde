@@ -145,13 +145,23 @@ void drawPaths(Vector paths, int[][] hexCenters) {
     Vector P = (Vector)paths.get(i);
     assert(P.size() > 1);
 
+
+    int start = 0;
+    String C = (String)P.get(0);
+    if (C.substring(0,2).equals("c=")) {
+       String[] c = split(C.substring(2), ",");
+       print(c[0]);
+       assert(c.length == 3);
+       stroke(float(c[0]), float(c[1]), float(c[2]));
+       start = 1;
+    }
     beginShape();
-    for (int j = 0; j < P.size(); j++) {
+    for (int j = start; j < P.size(); j++) {
       String[] s = split((String)P.get(j), "_");
       assert(s.length == 2);
       xy = hexSidePosn(int(s[0]), s[1], hexCenters);
       curveVertex(xy[0], xy[1]);
-      if (j == 0) curveVertex(xy[0], xy[1]);
+      if (j == start) curveVertex(xy[0], xy[1]);
     }
     curveVertex(xy[0], xy[1]);
     endShape();

@@ -2,6 +2,8 @@
 
 """Plan:
 
+- color by embedding into a line
+
 x Read graph G
 x Construct the grid assignment problem matrix:
     minimize 
@@ -27,12 +29,17 @@ IDEAS:
 
 1. use sparse matrix somehow to speed up?
 2. weaken the requirement of adjacent => edge
-3. color edges to avoid same color edges in a cell
+    - look @ "loss" due to forbidden pairs
+    - fan graph
 4. look for bug in hypercube(5)
-5. add constratints that put "close" nodes in close cells
-6. local clean up / greedy improvement?
-7. offset routed edges
-8. handle weighted edges
+5. local clean up / greedy improvement?
+6. only add distance requirement for single hop edges
+
+7. offset routed edges (?)
+8. handle weighted edges (?)
+
+x3. color edges to avoid same color edges in a cell
+x5. add constratints that put "close" nodes in close cells
 
 """
 
@@ -43,6 +50,7 @@ import networkx as nx
 import itertools
 import math
 import sys
+import colorsys
 
 #==========================================================================
 # Represents a tiling object
@@ -212,7 +220,8 @@ def build_qap_matrix(G, T):
         if graphdist > 4: continue
         for c,d in itertools.product(T.cells(), T.cells()):
             celldist = T.cell_distance(c, d) / T.hex_radius()
-            A[row_col(G,u,c),row_col(G,v,d)] = 2 + 10 * math.exp(graphdist - celldist)
+            q = abs(graphdist - celldist) + 1
+            A[row_col(G,u,c),row_col(G,v,d)] = 2 + 10.0 / q
 
     print >> sys.stderr, "Computing: forbidden assignments"
     for c,d in T.adjacent_cells():
@@ -315,7 +324,6 @@ def construct_routing_graph(T, occupied):
     """
     NODE_CROSSING_COST = 10
     EDGE_COST = 1
-    print occupied
 
     # construct the weighted clique graph
     H = nx.Graph()
@@ -331,6 +339,8 @@ def route_remaining_edges(G, T, n2c):
     #for u,v in G.edges_iter():
     #    if T.are_adjacent(n2c[u], n2c[v]):
     #        print 'edge (%d,%d) at %d,%d good' % (u,v,n2c[u], n2c[v])
+
+    print >>sys.stderr, "Started with %d edges." % (G.number_of_edges())
 
     # remove the edges from G that we have taken care of
     G.remove_edges_from([(u,v)
@@ -357,37 +367,107 @@ def route_remaining_edges(G, T, n2c):
         for s1,s2 in itertools.product(T.hex_sides(),T.hex_sides()):
             source = T.side_name(c,s1)
             target = T.side_name(d,s2)
-            if c == 45 and d == 44:
-                print 's,t', source, target, s1, s2
-                print 'len=', SP_len[source][target]
-                print 'path=', SP[source][target]
+
             if SP_len[source][target] < best or best is None:
                 best = SP_len[source][target]
                 bestp = SP[source][target]
-        print "Route %d - %d (%g) %s" % (u, v, best, ",".join(bestp)) 
+        #print >>sys.stderr, "Route %d - %d (%g) %s" % (u, v, best, ",".join(bestp)) 
         Routes.append(bestp)
     return Routes
 
+#==========================================================================
+# Coloring of edges
+#==========================================================================
+
+def color_graph(G):
+    """Return a color (integer) for every u in V to maximize so that
+    the endpoints of no edge are the same color."""
+    Nodes = sorted(G.nodes(), cmp=lambda a,b: cmp(G.degree(b), G.degree(a)))
+
+    print "%d degree=%d" % (Nodes[0], G.degree(Nodes[0]))
+    
+    k = 0
+    palette = set()
+    for u in Nodes:
+        C = set(G.node[v]["color"] for v in G.neighbors(u) if "color" in G.node[v])
+        # if there is no unused color
+        Avail = palette - C
+        if len(Avail) == 0:
+            palette.add(k)
+            G.node[u]["color"] = k
+            k += 1
+        else:
+            G.node[u]["color"] = min(Avail)
+
+    # return the number of colors used
+    return k
+
+
+def k_different_colors(k):
+    """Return a list of k colors that are visually different from each other.  From:
+    http://stackoverflow.com/questions/470690/how-to-automatically-generate-n-distinct-colors"""
+
+    colors = []
+    for i in np.arange(0.0, 360.0, 360.0 / k):
+        hue = i / 360.0
+        lightness = (50 + np.random.rand() * 10) / 100.0
+        saturation = (90 + np.random.rand() * 10) / 100.0
+        rgb = colorsys.hls_to_rgb(hue, lightness, saturation)
+        colors.append((255*rgb[0], 255*rgb[1], 255*rgb[2]))
+        
+    return colors
+    
+def color_routes(Routes):
+    """Routes is a list of lists; each list is a path in the graph that will be
+    drawn. Returns a list of the same length as Routes giving the colors."""
+
+    edge_name = lambda a,b: tuple(sorted((a, b)))
+
+    ColorG = nx.Graph()
+
+    # construct a dict mapping route to the edeges it contains
+    Edges = {}
+    for i, R in enumerate(Routes):
+        Edges[i] = set(edge_name(R[j], R[j+1]) for j in xrange(len(R)-1))
+        ColorG.add_node(i)
+
+    for i, j in itertools.combinations(xrange(len(Routes)), 2):
+        if len(Edges[i] & Edges[j]) > 0:
+            ColorG.add_edge(i,j)
+
+    nx.write_edgelist(ColorG, "routecolor.edg")
+
+    k = color_graph(ColorG)
+    print >> sys.stderr, "Required", k, "colors for routes"
+    
+    Palette = k_different_colors(k)
+    return [Palette[ColorG.node[i]["color"]] for i in xrange(len(Routes))]
 
 #==========================================================================
 # Computing of hex layout
 #==========================================================================
 
-def write_hex_layout(filename, G, T, node2cell, P):
+def write_hex_layout(filename, G, T, node2cell, P, RouteColors):
+
     with open(filename, "wt") as out:
         print >> out, "T hex %d %d %d" % (T.x,T.y, G.number_of_nodes())
+
+        # write the cell assignments
         for n,c in node2cell.iteritems():
             print >> out, "A %s %d %s" % (
                 n, c, G.node[n]['label'] if 'label' in G.node[n] else str(n)
                 )
-        for p in P:
-            print >> out, "P %s" % (" ".join(p))
+
+        # write the routes and their colors
+        assert len(P) == len(RouteColors)
+        for i, p in enumerate(P):
+            print >> out, "P c=%s %s" % (",".join(str(x) for x in RouteColors[i]), " ".join(p))
 
 
-def hex_layout(G, filename):
+def hex_layout(G, x, y, filename):
     # construct a tiling
     n = G.number_of_nodes()
-    T = HexTiling(10,15)
+    T = HexTiling(x,y)
 
     # assign nodes to cells
     print >> sys.stderr, "Building QAP matrix..."
@@ -401,9 +481,12 @@ def hex_layout(G, filename):
     print >> sys.stderr, "Routing remaining edges..."
     P = route_remaining_edges(G, T, node2cell)
 
+    # choose colors for the edges
+    RouteColors = color_routes(P)
+
     # write out the solution
     print >> sys.stderr, "Saving..."
-    write_hex_layout(filename, G, T, node2cell, P)
+    write_hex_layout(filename, G, T, node2cell, P, RouteColors)
 
 #==========================================================================
 # Main Program
@@ -423,9 +506,9 @@ def main():
     #G = nx.read_edgelist(graph)
     #G = nx.path_graph(10)
     #G = number_nodes(nx.hypercube_graph(4))
-    #G = number_nodes(nx.grid_graph(dim=[4,4]))
+    G = number_nodes(nx.grid_graph(dim=[4,4]))
     #G = number_nodes(nx.ladder_graph(20))
-    G = number_nodes(nx.read_gml(sys.argv[1]))
-    hex_layout(G, "hex.layout")
+    #G = number_nodes(nx.read_gml(sys.argv[1]))
+    hex_layout(G, 8, 8, "hex.layout")
 
 if __name__ == "__main__": main()
