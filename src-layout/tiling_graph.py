@@ -217,7 +217,7 @@ def build_qap_matrix(G, T):
     SP_len = nx.all_pairs_dijkstra_path_length(G)
     for u,v in itertools.product(G, G):
         graphdist = SP_len[u][v]
-        if graphdist > 4: continue
+        if graphdist > 1: continue
         for c,d in itertools.product(T.cells(), T.cells()):
             celldist = T.cell_distance(c, d) / T.hex_radius()
             q = abs(graphdist - celldist) + 1
@@ -431,6 +431,15 @@ def color_routes(Routes):
         Edges[i] = set(edge_name(R[j], R[j+1]) for j in xrange(len(R)-1))
         ColorG.add_node(i)
 
+    Count = {}
+    for E in Edges.itervalues():
+        for e in E:
+            if e not in Count: Count[e] = 0
+            Count[e] += 1
+
+    me = max(Count.itervalues())
+    print me, ",".join(str(e) for e in Count if Count[e] == me)
+
     for i, j in itertools.combinations(xrange(len(Routes)), 2):
         if len(Edges[i] & Edges[j]) > 0:
             ColorG.add_edge(i,j)
@@ -506,9 +515,9 @@ def main():
     #G = nx.read_edgelist(graph)
     #G = nx.path_graph(10)
     #G = number_nodes(nx.hypercube_graph(4))
-    G = number_nodes(nx.grid_graph(dim=[4,4]))
+    #G = number_nodes(nx.grid_graph(dim=[4,4]))
     #G = number_nodes(nx.ladder_graph(20))
-    #G = number_nodes(nx.read_gml(sys.argv[1]))
-    hex_layout(G, 8, 8, "hex.layout")
+    G = number_nodes(nx.read_gml(sys.argv[1]))
+    hex_layout(G, 12, 15, "hex.layout")
 
 if __name__ == "__main__": main()

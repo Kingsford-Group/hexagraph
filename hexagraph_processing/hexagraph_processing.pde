@@ -169,7 +169,7 @@ void drawPaths(Vector paths, int[][] hexCenters) {
 }
 
 void setup() {
-  size(1000, 1000);
+  size(1000, 500);
   PFont f = createFont("Helvetica", 16, true);
   textFont(f, 12);
 
