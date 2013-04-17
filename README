@@ -1,1 +1,9 @@
 Document Me!
+
+The prototype in src-layout requires:
+
+scipy
+numpy
+networkx
+sudo easy_install pyparsing==1.5.7
+

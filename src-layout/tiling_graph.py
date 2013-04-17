@@ -215,13 +215,17 @@ def build_qap_matrix(G, T):
 
     print >> sys.stderr, "Computing: Agreement between cells and graph"""
     SP_len = nx.all_pairs_dijkstra_path_length(G)
-    for u,v in itertools.product(G, G):
+    #for u,v in itertools.product(G, G):
+    #    if graphdist > 1: continue
+    for u,v in G.edges_iter():
         graphdist = SP_len[u][v]
-        if graphdist > 1: continue
         for c,d in itertools.product(T.cells(), T.cells()):
             celldist = T.cell_distance(c, d) / T.hex_radius()
             q = abs(graphdist - celldist) + 1
             A[row_col(G,u,c),row_col(G,v,d)] = 2 + 10.0 / q
+            A[row_col(G,v,d),row_col(G,u,c)] = 2 + 10.0 / q
+            A[row_col(G,v,c),row_col(G,u,d)] = 2 + 10.0 / q
+            A[row_col(G,u,d),row_col(G,v,c)] = 2 + 10.0 / q
 
     print >> sys.stderr, "Computing: forbidden assignments"
     for c,d in T.adjacent_cells():
@@ -269,7 +273,8 @@ def build_sparse_qap_matrix(G, T):
     data = np.array([e[2] for e in E])
     #A = scipy.sparse.csr_matrix((data, (row,col)), shape=(n,n), dtype='d')
 
-def sorted_leading_eig(A):
+
+def leading_eig(A):
     """Get the sorted leading eigenvalue of A"""
     r,c = np.shape(A)
     assert r == c
@@ -283,15 +288,43 @@ def sorted_leading_eig(A):
         v[:,leading_eig] *= -1
     assert min(v[:,leading_eig]) > 0
 
-    return sorted(enumerate(
-        v[:,leading_eig]), key=lambda x: x[1].real, reverse=True
-    )
+    return v[:, leading_eig]
+
+
+def leading_eig_power(A, precision=1e-5):
+    """Find the leading eigenvector using the power method"""
+
+    # make an initial guess
+    print >> sys.stderr, "Constructing initial guess"
+    v = np.sum(A, 0)
+    v /= np.linalg.norm(v)
+
+    # temporary storage
+    w = v.copy()
+
+    # while we haven't converged
+    print >> sys.stderr, "Using Power Method:",
+    delta = 10000.0
+    while delta > precision:
+        # solve w = A*v and normalize w
+        np.dot(A, v, out=w)
+        nw = np.linalg.norm(w)
+        w /= nw
+        assert nw != 0
+
+        # compute the change from last iteration
+        delta = np.linalg.norm(v - w)
+        v[:] = w
+        print >> sys.stderr, delta,
+    print >> sys.stderr
+    return v
 
 
 def solve_qap(G, T, A):
     """Return an assignment of nodes to cells"""
 
-    L = sorted_leading_eig(A)
+    L = leading_eig(A)
+    L = sorted(enumerate(L), key=lambda x: x[1].real, reverse=True)
 
     AssignedNodes = {}
     AssignedCells = {}
@@ -384,7 +417,7 @@ def color_graph(G):
     the endpoints of no edge are the same color."""
     Nodes = sorted(G.nodes(), cmp=lambda a,b: cmp(G.degree(b), G.degree(a)))
 
-    print "%d degree=%d" % (Nodes[0], G.degree(Nodes[0]))
+    print >> sys.stderr, "%d degree=%d" % (Nodes[0], G.degree(Nodes[0]))
     
     k = 0
     palette = set()
@@ -438,7 +471,7 @@ def color_routes(Routes):
             Count[e] += 1
 
     me = max(Count.itervalues())
-    print me, ",".join(str(e) for e in Count if Count[e] == me)
+    print >>sys.stderr, "Max degree edge=", me, ",".join(str(e) for e in Count if Count[e] == me)
 
     for i, j in itertools.combinations(xrange(len(Routes)), 2):
         if len(Edges[i] & Edges[j]) > 0:
@@ -484,7 +517,6 @@ def hex_layout(G, x, y, filename):
     r,c = np.shape(A)
     print >> sys.stderr, "Solving quadratic assignment problem..."
     node2cell = solve_qap(G, T, A)
-    print node2cell
 
     # route the rest of the edges
     print >> sys.stderr, "Routing remaining edges..."
