@@ -102,7 +102,7 @@ class HexTiling(object):
 
     def hex_sides(self):
         """Return the names of hex sides"""
-        return set(('nw', 'n', 'ne', 'se', 's', 'sw'))
+        return ['se', 's', 'sw', 'nw', 'n', 'ne']
 
     def cell_center(self, c):
         """Return the center of cell c"""
@@ -165,6 +165,10 @@ class HexTiling(object):
     def num_cells(self):
         """The total number of cells"""
         return self.x * self.y
+
+    def opposite_side(self, s):
+        opp = {'n':'s', 's':'n', 'se':'nw', 'sw':'ne', 'ne':'sw', 'nw':'se'}
+        return opp[s]
 
     def side_name(self, c, s):
         """Return the name of the side for cell c side s"""
@@ -435,21 +439,128 @@ def construct_routing_graph(T, occupied):
 
     return H
 
+def construct_routing_graph_edges(T):
+    H = nx.Graph()
+
+    sides = T.hex_sides()
+    assert len(sides) == 6
+
+    for c in T.cells():
+        # add the side-to-side edges
+        for s1, s2 in itertools.combinations(sides, 2):
+            H.add_edge("s_%d_%s" % (c,s1), "s_%d_%s" % (c,s2))
+        
+        for i in xrange(6):
+            cs1 = sides[i % 6]
+            cs2 = sides[(i + 1) % 6]
+            corner = "c_%d_%s_%s" % (c,cs1, cs2)
+
+            # add corner-to-side edges
+            for s in sides:
+                if s != cs1 and s != cs2:
+                    H.add_edge(corner, "s_%d_%s" % (c, s))
+
+            # get the cells across from this corner
+            cn1 = T.neighbors(c)[cs1]
+            cn2 = T.neighbors(c)[cs2]
+            junction = "j_%d_%d_%d" % tuple(sorted(c,cn1,cn2))
+            
+            # add corner to junction
+            H.add_edge(corner, junction)
+            
+            # add backward channel edges
+            cm, dm = min(c,cn1), max(c,cn1)
+            g = "g_%d_%d" % (cm, dm)
+            H.add_edge(junction, g)              # para channel
+            H.add_edge("s_%d_%s" % (c, cs1), g)  # perp channel
+            
+            # add forward channel edges
+            cm, dm = min(c,cn2), max(c,cn2)
+            g = "g_%d_%d" % (cm, dm)
+            H.add_edge(junction, g)             # para channel
+            H.add_edge("s_%d_%s" % (c, cs2), g) # para channel
+            
+    return H
+
+def weight_routing_graph(RGraph, G, c2n):
+    NODE_CROSSING_COST = 10
+    EDGE_COST = 2
+    SMALL_GAP_COST = 0.5
+    LONG_GAP_COST = NODE_CROSSING_COST / 2.0
+
+    for u, v in RGraph.edges_iter():
+        if us > vs: us, vs = vs, us
+        us = u.split('_')
+        vs = v.split('_')
+        etype = us[0] + vs[0]
+
+        # side-to-side edges 
+        if etype = 'ss':      
+            cu, cv = int(us[1]), int(vs[1])
+            assert cu == cv
+            w = NODE_CROSSING_COST if cu in occupied else EDGE_COST
+
+        # corner-to-side edges
+        elif etype == 'cs':   
+            cu, cv = int(us[1]), int(vs[1])
+            assert cu == cv
+            w = NODE_CROSSING_COST if cu in occupied else EDGE_COST
+
+        # side-to-gap edges
+        elif etype == 'gs':
+            a, b = int(us[1]), int(us[2])
+            c = int(vs[1])
+            assert c == a or c == b
+            # if cells a and c are blocked, add weight, else delete
+            w = None if G.has_edge(c2n[a], c2n[b]) else SMALL_GAP_COST
+
+        elif etype == 'gj':   # gap-to-junction edges
+            a, b = int(us[1]), int(us[2])
+            w = None if G.has_edge(c2n[a], c2n[b]) else w = LONG_GAP_COST
+
+        # corner-to-junction edges
+        elif etype == 'cj':   
+            cu = int(us[1])
+            for j in  int(x for x in vs[1:]):
+                if G.has_edge(c2n[cu], c2n[j]):
+                    w = 0.0
+                    break
+            else:
+                w = SMALL_GAP_COST
+            
+        if w is not None:
+            RGraph.edge[u][v]['weight'] = w
+        else:
+            ToDelete.add((u,v))
+    return RGraph
+
+def route_remaining_edges(G, T, n2c, c2n):
+    H = construct_routing_graph_edges(T)
+    weight_routing_graph(H, G, c2n)
+    nx.write_edgelist(H, "hex.graph")
+
+    # find shortest paths in the route graph
+    SP = nx.all_pairs_dijkstra_path(H)
+    SP_len = nx.all_pairs_dijkstra_path_length(H)
+
+    Routes = []
+    for u, v in G.edges_iter():
+        c = n2c[u]
+        d = n2c[v]
+        # find the combination of sides that gives the shortest path
+        best = bestp = None
+        for s1, s2 in itertools.product(T.hex_sides(),T.hex_sides()):
+            source = "s_%d_%s" % (c, s1)
+            target = "s_%d_%s" % (d, s2)
+            splen = nx.shortest_path_length(G, source, target)
+            if splen < best
+            sp = nx.shortest_path(G, source, target)
 
 def route_remaining_edges(G, T, n2c):
     #for u,v in G.edges_iter():
     #    if T.are_adjacent(n2c[u], n2c[v]):
     #        print 'edge (%d,%d) at %d,%d good' % (u,v,n2c[u], n2c[v])
 
-    print >>sys.stderr, "Started with %d edges." % (G.number_of_edges())
-
-    # remove the edges from G that we have taken care of
-    G.remove_edges_from([(u,v)
-        for u,v in G.edges_iter()
-            if T.are_adjacent(n2c[u], n2c[v])
-        ])
-
-    print >>sys.stderr, "%d edges remain." % (G.number_of_edges())
 
     if G.number_of_edges() == 0: return []
 
@@ -591,6 +702,15 @@ def hex_layout(G, x, y, filename):
     node2cell, blockedSides = find_assignment_qap(G, T, A)
 
     # route the rest of the edges
+
+    print >>sys.stderr, "Started with %d edges." % (G.number_of_edges())
+    # remove the edges from G that we have taken care of
+    G.remove_edges_from([(u,v)
+        for u,v in G.edges_iter()
+            if T.are_adjacent(n2c[u], n2c[v])
+        ])
+
+    print >>sys.stderr, "%d edges remain." % (G.number_of_edges())
     print >> sys.stderr, "Routing remaining edges..."
     P = route_remaining_edges(G, T, node2cell)
 
