@@ -28,16 +28,25 @@ uv not adj, cd not adj: fine
 IDEAS:
 
 1. use sparse matrix somehow to speed up?
+    - implictly store the matrix and do the multiplication
+      on that implict matrix in the power method
+    - separate matrix into (A + B + C) where A is sparse, and B 
+      and C are easy to multiply
+      
 2. weaken the requirement of adjacent => edge
-    - look @ "loss" due to forbidden pairs
+    x look @ "loss" due to forbidden pairs
     - fan graph
+3. add "border" before routing
+4. limit # of routes passing through an edge
 4. look for bug in hypercube(5)
 5. local clean up / greedy improvement?
-6. only add distance requirement for single hop edges
 
 7. offset routed edges (?)
 8. handle weighted edges (?)
 
+9. only iterate over "near" pairs of cells when doing distance matching
+
+x6. only add distance requirement for single hop edges
 x3. color edges to avoid same color edges in a cell
 x5. add constratints that put "close" nodes in close cells
 
@@ -320,14 +329,62 @@ def leading_eig_power(A, precision=1e-5):
     return v
 
 
-def solve_qap(G, T, A):
-    """Return an assignment of nodes to cells"""
+def round_assignment_relaxed(G, T, A, L):
+    """Return an assignment of nodes to cells; allow some non-adjacent nodes to
+    be assigned to adjacent cells."""
 
-    L = leading_eig(A)
-    L = sorted(enumerate(L), key=lambda x: x[1].real, reverse=True)
+    LOSS_CUTOFF = 0.0
+
+    FirstAssignment, Bunused = round_assignment(G, T, A, L)
+
+    Ldict = {unpack_row_col(G, i): x for i, x in L}
 
     AssignedNodes = {}
     AssignedCells = {}
+    for i,x in L:
+        u,c = unpack_row_col(G, i)
+
+        # skip if one of these has already been matched
+        if u in AssignedNodes or c in AssignedCells:
+            continue
+
+        # figure out which sides would block this assignment (if any)
+        blockSet = set()
+        for side, d in T.neighbors(c).iteritems():
+            if d in AssignedCells and not G.has_edge(u, AssignedCells[d]):
+                blockSet.add(side)
+
+        # if there is something blocking, compute the loss
+        loss = 0
+        if len(blockSet) > 0:
+            first_reward = Ldict[u, FirstAssignment[u]]
+            assert first_reward >= 0 and x >= 0
+            loss = (x - first_reward) / x
+
+        # make this assignment if the cell is not blocked or the loss is too great
+        if len(blockSet) == 0 or loss >= LOSS_CUTOFF:
+            AssignedNodes[u] = c
+            AssignedCells[c] = u
+
+    # post process to find blocked sides
+    BlockedSides = {}
+    for u,c in AssignedNodes.iteritems():
+        BlockedSides[u] = set()
+        for side, d in T.neighbors(c).iteritems():
+            if d in AssignedCells and not G.has_edge(u, AssignedCells[d]):
+                BlockedSides[u].add(side)
+        
+    assert len(AssignedNodes) == len(G)
+    return AssignedNodes, BlockedSides
+
+
+def round_assignment(G, T, A, L):
+    """Convert the fractional sorted list of assignments L to choices of
+    assignments"""
+
+    AssignedNodes = {}
+    AssignedCells = {}
+    BlockedSides = {}
     for i,x in L:
         u,c = unpack_row_col(G, i)
 
@@ -342,8 +399,19 @@ def solve_qap(G, T, A):
         else:
             AssignedNodes[u] = c
             AssignedCells[c] = u
+            BlockedSides[u] = {}
+
     assert len(AssignedNodes) == len(G)
-    return AssignedNodes
+    return AssignedNodes, BlockedSides
+
+
+def find_assignment_qap(G, T, A):
+    """Return an assignment of nodes to cells"""
+
+    L = leading_eig_power(A)
+    L = sorted(enumerate(L), key=lambda x: x[1].real, reverse=True)
+
+    return round_assignment_relaxed(G, T, A, L)
 
 
 #==========================================================================
@@ -489,21 +557,25 @@ def color_routes(Routes):
 # Computing of hex layout
 #==========================================================================
 
-def write_hex_layout(filename, G, T, node2cell, P, RouteColors):
+def write_hex_layout(filename, G, T, node2cell, P, RouteColors, BlockedSides):
 
     with open(filename, "wt") as out:
         print >> out, "T hex %d %d %d" % (T.x,T.y, G.number_of_nodes())
 
         # write the cell assignments
         for n,c in node2cell.iteritems():
-            print >> out, "A %s %d %s" % (
-                n, c, G.node[n]['label'] if 'label' in G.node[n] else str(n)
+            label = G.node[n]['label'] if 'label' in G.node[n] else str(n)
+            label = label.replace(" ", "_")
+            print >> out, "A %s %d %s %s" % (
+                n, c, label, ",".join(BlockedSides[n])
                 )
 
         # write the routes and their colors
         assert len(P) == len(RouteColors)
         for i, p in enumerate(P):
-            print >> out, "P c=%s %s" % (",".join(str(x) for x in RouteColors[i]), " ".join(p))
+            print >> out, "P c=%s %s" % (
+                ",".join(str(x) for x in RouteColors[i]), " ".join(p)
+            )
 
 
 def hex_layout(G, x, y, filename):
@@ -516,7 +588,7 @@ def hex_layout(G, x, y, filename):
     A = build_qap_matrix(G, T)
     r,c = np.shape(A)
     print >> sys.stderr, "Solving quadratic assignment problem..."
-    node2cell = solve_qap(G, T, A)
+    node2cell, blockedSides = find_assignment_qap(G, T, A)
 
     # route the rest of the edges
     print >> sys.stderr, "Routing remaining edges..."
@@ -527,7 +599,7 @@ def hex_layout(G, x, y, filename):
 
     # write out the solution
     print >> sys.stderr, "Saving..."
-    write_hex_layout(filename, G, T, node2cell, P, RouteColors)
+    write_hex_layout(filename, G, T, node2cell, P, RouteColors, blockedSides)
 
 #==========================================================================
 # Main Program
