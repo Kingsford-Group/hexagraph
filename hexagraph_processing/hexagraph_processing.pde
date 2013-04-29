@@ -3,13 +3,21 @@ import java.util.Vector;
 // Our global data
 int[] assignment;
 int[] cellToNode;
-Vector[] blockedSides;
+Vector[] blockedSides; // indexed by cell
 String[] names;
 
 Vector paths;
 int n, gridx, gridy;
 int hexRadius = 20;
 float BLOCKED_OFFSET = 0.8;
+
+int[][] hexCenters;
+
+PVector[] outer = new PVector[6];
+PVector[] inner = new PVector[6];
+PVector[] iohalf = new PVector[12];
+
+String [] order = {"se", "s", "sw", "nw", "n", "ne"};
 
 //================================================================
 // Hex Tiling Geometry
@@ -30,22 +38,20 @@ void drawHex(float cx, float cy, float r, String t) {
   popStyle();
 }
 
+/* Return i mod n, handling the case where i is negative correctly */
 int pos_mod(int i, int n) {
   return (i >= 0) ? (i % n) : (n + (i%n));
 }
 
-PVector[] drawHexSunken(float cx, float cy, float r, String t, Vector sides) {
-  float a = 2*PI/6;
+/* Set the outer, inner, and iohalf positions */
+void setPositions(float r) {
+  float a = 2*PI/6; // 60 degrees
   float rp = BLOCKED_OFFSET * r;
   float s = r - rp;
-  PVector[] out = new PVector[6];
-
-  PVector[] outer = new PVector[6];
-  PVector[] inner = new PVector[6];
-  PVector[] iohalf = new PVector[12];
+  
   for (int i = 0; i < 6; i++) {
-    outer[i] = new PVector(r*cos(a*i) + cx, r*sin(a*i) + cy);
-    inner[i] = new PVector(rp*cos(a*i) + cx, rp*sin(a*i) + cy);
+    outer[i] = new PVector(r*cos(a*i), r*sin(a*i));
+    inner[i] = new PVector(rp*cos(a*i), rp*sin(a*i));
 
     iohalf[pos_mod(2*i - 1, 12)] = new PVector(
     inner[i].x + s * cos(a*pos_mod(i-1, 6)), 
@@ -53,12 +59,100 @@ PVector[] drawHexSunken(float cx, float cy, float r, String t, Vector sides) {
       );
     iohalf[2*i] = new PVector(inner[i].x + s * cos(a*pos_mod(i+1,6)), inner[i].y + s * sin(a*pos_mod(i+1,6)));
   }
+}
 
-  String [] order = {
-    "se", "s", "sw", "nw", "n", "ne"
-  };
-  
-  println(sides);
+/* Return the index into order that corresponds to side */
+int side2index(String side) {
+  for(int i = 0; i < order.length; i++) {
+    if (side.equals(order[i])) return i;
+  }
+  assert(false);
+  return -1;
+}
+
+/* Return the side of c along which d lies */
+String neigh2side(int c, int d) {
+  if ((c / gridx) % 2 == 1) {
+    if (d == c-gridx) return "nw";
+    if (d == c-2*gridx) return "n";
+    if (d == c-gridx+1) return "ne";
+    if (d == c+gridx+1) return "se";
+    if (d == c+2*gridx) return "s";
+    if (d == c+gridx) return "sw";
+  } else {
+    if (d == c-gridx-1) return "nw";
+    if (d == c-2*gridx) return "n";
+    if (d == c-gridx) return "ne";
+    if (d == c+gridx) return "se";
+    if (d == c+2*gridx) return "s";
+    if (d == c+gridx-1) return "sw";
+  }
+  assert(false);
+  return null;
+}
+
+/* Return the midpoint of the 2 points */
+PVector midpoint(float x1, float y1, float x2, float y2) {
+  return new PVector(
+    x1 + (x2 - x1)*0.5,
+    y1 + (y2 - y1)*0.5
+  );
+}
+
+// Return the x,y coord of the node with the given name
+PVector nodePosition(String name) {
+   String[] s = split(name, '_');
+   println(name);
+   int cell = int(s[1]);
+   int cx = hexCenters[cell][0];
+   int cy = hexCenters[cell][1];
+   
+   int i;
+   int cell2;
+   switch (s[0].charAt(0)) {
+     case 's': // s_cell_side
+       i = side2index(s[2]);
+       if (blockedSides[cell] != null && blockedSides[cell].contains(s[2])) {
+         return midpoint(
+           cx + inner[i].x, cy + inner[i].y,
+           cx + inner[(i+1)%6].y, cy + inner[(i+1)%6].y
+           );
+       } else {
+         return midpoint(
+           cx + outer[i].x, cy + outer[i].y,
+           cx + outer[(i+1)%6].y, cy + outer[(i+1)%6].y
+           );
+       }
+       
+     case 'g': // g_cell1_cell2
+       cell2 = int(s[2]);
+       String side = neigh2side(cell, cell2);
+       i = side2index(side);
+       return midpoint(
+           cx + outer[i].x, cy + outer[i].y,
+           cx + outer[(i+1)%6].y, cy + outer[(i+1)%6].y
+           );
+      
+     case 'c': // c_c1_s1_s2
+       i = side2index(s[2]);
+       return new PVector(cx + outer[i].x, cy + outer[i].y);
+       
+     case 'j': // j_c1_c2_c3
+       cell2 = int(s[2]);
+       int cell3 = int(s[3]);
+       int s1 = side2index(neigh2side(cell, cell2));
+       int s2 = side2index(neigh2side(cell, cell3));
+       int smax = max(s1,s2);
+       int smin = min(s1,s2);
+       
+       if (smax == 5 && smin == 0) smax = 0;
+       return new PVector(cx + outer[smax].x, cy + outer[smax].y);
+   }
+   return null;
+}
+
+
+void drawHexSunken(float cx, float cy, float r, String t, Vector sides) {
 
   int lx=0,ly=0;
   // draw the shape
@@ -67,21 +161,16 @@ PVector[] drawHexSunken(float cx, float cy, float r, String t, Vector sides) {
     String curside = order[pos_mod(i, 6)];
     String prevside = order[pos_mod(i-1, 6)];
 
-    print(i);
     if (sides.contains(curside) && sides.contains(prevside)) {
-      vertex(inner[i%6].x, inner[i%6].y);
-      print("I");
+      vertex(inner[i%6].x + cx, inner[i%6].y + cy);
     } else if(sides.contains(curside)) {
       PVector P = iohalf[pos_mod(2 * i - 1, 12)];
-      vertex(P.x, P.y);
-      print("A");
+      vertex(P.x + cx, P.y + cy);
     } else if(sides.contains(prevside)) {
       PVector P = iohalf[pos_mod(2*i, 12)];
-      vertex(P.x, P.y);
-      print("B");
+      vertex(P.x + cx, P.y + cy);
     } else {
-      vertex(outer[i%6].x, outer[i%6].y);
-      print("O");
+      vertex(outer[i%6].x + cx, outer[i%6].y + cy);
     }
   }
   endShape(CLOSE);
@@ -92,8 +181,6 @@ PVector[] drawHexSunken(float cx, float cy, float r, String t, Vector sides) {
   textAlign(CENTER);
   text(t, cx, cy+textAscent()/2);
   popStyle();
-
-  return new PVector[0];
 }
 
 /* return the height of the hexagon from side to side */
@@ -163,7 +250,7 @@ int[] hexSidePosn(int c, String side, int[][] hexCenters) {
   // if side is blocked, move BLOCKED_OFFSET pixels toward center
   if (cellToNode[c] >= 0) {
     println(c);
-    Vector s = blockedSides[cellToNode[c]];
+    Vector s = blockedSides[c];
     for (int j = 0; j < s.size(); j++) {
       if (side.equals((String)s.get(j))) {
         xy[0] = (int)(hexCenters[c][0] + (xy[0] - hexCenters[c][0]) * BLOCKED_OFFSET);
@@ -197,19 +284,20 @@ void readHexLayout(String filename) {
       assignment = new int[n];
       names = new String[n];
       paths = new Vector();
-      blockedSides = new Vector[n];
+      blockedSides = new Vector[gridx * gridy];
       break;
 
     case 'A':
       int u = int(s[1]);
-      assignment[u] = int(s[2]);
+      int c = int(s[2]);
+      assignment[u] = c;
       cellToNode[int(s[2])] = u;
       names[u] = s[3];
 
       // read the blocked sides into a vector
-      blockedSides[u] = new Vector();
+      blockedSides[c] = new Vector();
       String[] p = split(s[4], ',');
-      for (int j = 0; j < p.length; j++) blockedSides[u].add(p[j]);
+      for (int j = 0; j < p.length; j++) blockedSides[c].add(p[j]);
       break;
 
     case 'P':
@@ -227,22 +315,20 @@ void drawNodes(int[] assignment, int[][] hexCenters) {
   for (int i = 0; i < assignment.length; i++) {
     int cx = hexCenters[assignment[i]][0];
     int cy = hexCenters[assignment[i]][1];
-    drawHexSunken(cx, cy, hexRadius, names[i], blockedSides[i]); //+ "," + str(assignment[i]));
+   drawHexSunken(cx, cy, hexRadius, names[i], blockedSides[assignment[i]]); //+ "," + str(assignment[i]));
+  //drawHexSunken(cx, cy, hexRadius, str(assignment[i]), blockedSides[assignment[i]]);
   }
 }
 
 /* draw curves along the given paths */
-void drawPaths(Vector paths, int[][] hexCenters) {
+void drawPaths_simple(Vector paths, int[][] hexCenters) {
   noFill();
 
-  int[] xy = {
-    0, 0
-  };
+  int[] xy = {0, 0};
 
   for (int i = 0; i < paths.size(); i++) {
     Vector P = (Vector)paths.get(i);
     assert(P.size() > 1);
-
 
     int start = 0;
     String C = (String)P.get(0);
@@ -255,12 +341,41 @@ void drawPaths(Vector paths, int[][] hexCenters) {
     beginShape();
     for (int j = start; j < P.size(); j++) {
       String[] s = split((String)P.get(j), "_");
-      assert(s.length == 2);
-      xy = hexSidePosn(int(s[0]), s[1], hexCenters);
+      assert(s.length == 3);
+      xy = hexSidePosn(int(s[1]), s[2], hexCenters);
       curveVertex(xy[0], xy[1]);
       if (j == start) curveVertex(xy[0], xy[1]);
     }
     curveVertex(xy[0], xy[1]);
+    endShape();
+  }
+}
+
+/* draw curves along the given paths */
+void drawPaths(Vector paths, int[][] hexCenters) {
+  noFill();
+  
+  for (int i = 0; i < paths.size(); i++) {
+    Vector P = (Vector)paths.get(i);
+    assert(P.size() > 1);
+
+    int start = 0;
+    String C = (String)P.get(0);
+    if (C.substring(0, 2).equals("c=")) {
+      String[] c = split(C.substring(2), ",");
+      assert(c.length == 3);
+      stroke(float(c[0]), float(c[1]), float(c[2]));
+      start = 1;
+    }
+    
+    PVector A = null;
+    beginShape();
+    for (int j = start; j < P.size(); j++) {
+      A = nodePosition((String)P.get(j));   
+      curveVertex(A.x, A.y);
+      if (j == start) curveVertex(A.x, A.y);
+    }
+    curveVertex(A.x, A.y);
     endShape();
   }
 }
@@ -271,10 +386,11 @@ void setup() {
   textFont(f, 12);
 
   readHexLayout("hex.layout");
-  int[][] hexCenters = createHexCenters(gridx, gridy, 20);
+  hexCenters = createHexCenters(gridx, gridy, hexRadius);
+  setPositions(hexRadius);
 
   drawNodes(assignment, hexCenters);
-  drawPaths(paths, hexCenters);
+  drawPaths_simple(paths, hexCenters);
   noFill();
 }
 

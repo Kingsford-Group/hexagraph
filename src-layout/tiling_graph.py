@@ -1,29 +1,11 @@
 #!/usr/bin/env python
 
 """Plan:
-
-- color by embedding into a line
-
-x Read graph G
-x Construct the grid assignment problem matrix:
-    minimize 
-    A[(u,c),(v,d)] = INF for all cases where uv are not adjacent but cd are
-    A[(u,c),(v,d)] = -1 if u and v are adjacent, and c and d are adjacent
+* Read graph G
+* Construct the grid assignment problem matrix
 * Solve the assignment problem approximately to get a u->c assignment
-
 * Create a routing graph: for every cell that is not filled replace it with a clique
-
 * find a set of edge disjoint paths from {s_i} to {t_i} representing the unsatisfied edges
-
-if c and d are adjacent then u and v must be adjacent
-    if u v not adj => c and d must not be adj
-
-if u and v are adjacent, we want c and d to be adjacent
-
-uv adj, cd adj: desired
-uv adj, cd not adj: not desired
-uv not adj, cd adj: forbidden
-uv not adj, cd not adj: fine
 
 IDEAS:
 
@@ -38,28 +20,27 @@ IDEAS:
     - fan graph
 3. add "border" before routing
 4. limit # of routes passing through an edge
-4. look for bug in hypercube(5)
-5. local clean up / greedy improvement?
-
-7. offset routed edges (?)
-8. handle weighted edges (?)
-
-9. only iterate over "near" pairs of cells when doing distance matching
-
-x6. only add distance requirement for single hop edges
-x3. color edges to avoid same color edges in a cell
-x5. add constratints that put "close" nodes in close cells
-
+5. look for bug in hypercube(5)
+6. local clean up / greedy improvement?
+7. color by embedding into a line
+8. offset routed edges (?)
+9. handle weighted edges (?)
+10. only iterate over "near" pairs of cells when doing distance matching
+x11. only add distance requirement for single hop edges
+x12. color edges to avoid same color edges in a cell
+x13. add constratints that put "close" nodes in close cells
 """
 
 import numpy as np
 import scipy.sparse
 import scipy.sparse.linalg
 import networkx as nx
+import igraph
 import itertools
 import math
 import sys
 import colorsys
+import random
 
 #==========================================================================
 # Represents a tiling object
@@ -179,7 +160,7 @@ class HexTiling(object):
         if s in N and N[s] < c:
             c = N[s]
             s = "".join(opp[a] for a in s)
-        return "%s_%s" % (str(c), s)
+        return "s_%d_%s" % (c, s)
 
     def grid_coords(self, c):
         y = c // self.y
@@ -187,7 +168,168 @@ class HexTiling(object):
         return (x,y)
 
 #==========================================================================
-# Assignment of nodes to cells
+# Assignment of nodes to cells via iterative linear assignment
+#==========================================================================
+
+def build_lap_graph(G, T, n2c, c2n, inertia):
+    """Build a bipartite graph from nodes to cells"""
+    
+    n = G.number_of_nodes()
+    LapGraph = igraph.Graph()
+    LapGraph.add_vertices(n + T.num_cells())
+    for u in G:
+        LapGraph.vs[u]['type'] = True  # left half of bipartite graph
+    for c in T.cells():
+        LapGraph.vs[n+c]['type'] = False  # right half of bipartite graph
+
+    for u in G:
+        if random.random() < inertia:
+            LapGraph.add_edge(u, n+n2c[u], weight=1000)
+            continue
+
+        for c in T.cells():
+            cost_cu = 1
+            bad_count = 0
+            for d in T.neighbors(c).itervalues():
+                if d in c2n and c2n[d] != u:
+                    if G.has_edge(c2n[d], u):    
+                        cost_cu += 1000
+                    else:
+                        bad_count += 1
+                        #cost_cu = None
+                        #break
+
+            if cost_cu is not None and (bad_count == 0 or cost_cu > 1):
+                for v in G.neighbors(u):
+                    celldist = int(T.cell_distance(c, n2c[v]) / (2*T.hex_radius())) + 1
+                    cost_cu += 500 / celldist
+
+                assert cost_cu >= 0
+                LapGraph.add_edge(u, n + c, weight=int(cost_cu))
+
+    return LapGraph
+
+
+def make_initial_assignments(G, T):
+    """Construct some dummy initial assignments of n2c and c2n; not guaranteed to be good
+    or even feasible."""
+    # satisfy some edges
+    n2c = {}
+    c = 0
+    for u,v in G.edges_iter():
+        if u not in n2c and v not in n2c:
+            n2c[u] = c
+            n2c[v] = c+1
+            c += 3
+
+    # put unassinged nodes lined up at the end
+    for u in G.nodes_iter():
+        if u not in n2c:
+            n2c[u] = c
+            c += 2
+
+    # construct c2n
+    c2n = {c:u for u,c in n2c.iteritems()}
+
+    return n2c, c2n
+
+
+def find_blocked_sides(G, T, n2c, c2n):
+    """find which sides of cells are adjacent to nodes with no edge"""
+    Blocked = {}
+    for u in G:
+        c = n2c[u]
+        Blocked[u] = set()
+        for s, d in T.neighbors(c).iteritems():
+            if d in c2n and not G.has_edge(u, c2n[d]):
+                Blocked[u].add(s)
+    return Blocked
+
+                
+def place_unplaced_nodes(G, T, n2c, c2n):
+    """for every node in G that is not in n2c, put it someplace that is not forbidden"""
+
+    # find the nodes that haven't been placed
+    i = 0
+    V = {}
+    invV = []
+    for u in G:
+        if u not in n2c:
+            V[u] = i
+            invV.append(u)
+            i += 1
+
+    if len(V) == 0: return
+
+    # build a bipartite graph
+    L = igraph.Graph()
+    L.add_vertices(len(V) + T.num_cells())
+
+    for u in V:
+        L.vs[V[u]]['type'] = 0
+        for c in T.cells():
+            # skip if c is already assigned
+            if c in c2n: continue
+
+            # skip if node is blocked
+            for d in T.neighbors(c).itervalues():
+                if d in c2n and not G.has_edge(c2n[d], u):
+                    break
+            else:
+                L.add_edge(V[u], c + len(V), weight=1)
+    for c in T.cells():
+        L.vs[len(V) + c]['type'] = 1
+
+    # find the matching
+    M = L.maximum_bipartite_matching()
+    for e in M.edges():
+        u = invV[e.source]
+        c = e.target - len(V)
+        assert u not in n2c
+        assert c not in c2n
+        print "Placing: %d in cell %d" % (u,c)
+        n2c[u] = c
+        c2n[c] = u
+
+
+def find_assignment_ilap(G, T, CUTOFF=1):
+    """Use an iterative LAP apprach to place the nodes"""
+    print >> sys.stderr, "Finding assignment via iterative LAP..."
+    n = G.number_of_nodes()
+    n2c, c2n = make_initial_assignments(G, T)
+    prev_weight = 0 # some small number
+    delta = 2*CUTOFF
+    print n, T.num_cells(), n*T.num_cells()
+    inertia = 1
+    while delta > CUTOFF:
+        L = build_lap_graph(G, T, n2c, c2n, inertia / 200.0)
+        M = L.maximum_bipartite_matching(weights='weight')
+        old_n2c = n2c.copy()
+        n2c = {}
+        c2n = {}
+        w = 0.0
+        for e in M.edges():
+            u = e.source
+            c = e.target - n
+            assert c >= 0
+            w += e["weight"]
+            n2c[u] = c
+            c2n[c] = u
+        place_unplaced_nodes(G, T, n2c, c2n)
+        assert len(n2c) == n
+        assert len(c2n) == n
+        changed = sum(1 for u in n2c if old_n2c[u] != n2c[u])
+        print w, len(L.es), changed
+        delta = abs(prev_weight - w)
+        delta = changed
+        prev_weight = w
+        inertia += 1
+    
+    Blocked = find_blocked_sides(G, T, n2c,c2n)
+    return n2c, c2n, Blocked
+    
+#==========================================================================
+# Assignment via spectral approximation to quadratic assignment
 #==========================================================================
 
 def print_assignmat(G, A):
@@ -206,11 +348,13 @@ def print_assignmat(G, A):
         print
     print
 
+
 def row_col(G, u, c):
     """assumes u and c are integers"""
     assert isinstance(c, (int, long))
     assert isinstance(u, (int, long))
     return G.number_of_nodes()*c + u
+
 
 def unpack_row_col(G, i):
     # i = n*c + u
@@ -219,8 +363,17 @@ def unpack_row_col(G, i):
     assert c * G.number_of_nodes() + u == i
     return u,c
 
+
 def build_qap_matrix(G, T):
-    """Return the QAP matrix as a sparse matrix"""
+    """Return the QAP matrix as a sparse matrix. The idea is:
+    if c and d are adjacent then u and v must be adjacent
+        if u v not adj => c and d must not be adj
+    if u and v are adjacent, we want c and d to be adjacent
+    uv adj, cd adj: desired
+    uv adj, cd not adj: not desired
+    uv not adj, cd adj: forbidden
+    uv not adj, cd not adj: fine
+    """
 
     n = T.num_cells() * G.number_of_nodes()
     A = 2*np.ones((n,n))
@@ -235,10 +388,10 @@ def build_qap_matrix(G, T):
         for c,d in itertools.product(T.cells(), T.cells()):
             celldist = T.cell_distance(c, d) / T.hex_radius()
             q = abs(graphdist - celldist) + 1
-            A[row_col(G,u,c),row_col(G,v,d)] = 2 + 10.0 / q
-            A[row_col(G,v,d),row_col(G,u,c)] = 2 + 10.0 / q
-            A[row_col(G,v,c),row_col(G,u,d)] = 2 + 10.0 / q
-            A[row_col(G,u,d),row_col(G,v,c)] = 2 + 10.0 / q
+            A[row_col(G,u,c),row_col(G,v,d)] = 2 + 100.0 / q
+            A[row_col(G,v,d),row_col(G,u,c)] = 2 + 100.0 / q
+            A[row_col(G,v,c),row_col(G,u,d)] = 2 + 100.0 / q
+            A[row_col(G,u,d),row_col(G,v,c)] = 2 + 100.0 / q
 
     print >> sys.stderr, "Computing: forbidden assignments"
     for c,d in T.adjacent_cells():
@@ -337,9 +490,9 @@ def round_assignment_relaxed(G, T, A, L):
     """Return an assignment of nodes to cells; allow some non-adjacent nodes to
     be assigned to adjacent cells."""
 
-    LOSS_CUTOFF = 0.0
+    LOSS_CUTOFF = 0.1
 
-    FirstAssignment, Bunused = round_assignment(G, T, A, L)
+    FirstAssignment, Aunused, Bunused = round_assignment(G, T, A, L)
 
     Ldict = {unpack_row_col(G, i): x for i, x in L}
 
@@ -366,6 +519,7 @@ def round_assignment_relaxed(G, T, A, L):
             loss = (x - first_reward) / x
 
         # make this assignment if the cell is not blocked or the loss is too great
+        print loss
         if len(blockSet) == 0 or loss >= LOSS_CUTOFF:
             AssignedNodes[u] = c
             AssignedCells[c] = u
@@ -379,7 +533,7 @@ def round_assignment_relaxed(G, T, A, L):
                 BlockedSides[u].add(side)
         
     assert len(AssignedNodes) == len(G)
-    return AssignedNodes, BlockedSides
+    return AssignedNodes, AssignedCells, BlockedSides
 
 
 def round_assignment(G, T, A, L):
@@ -406,11 +560,15 @@ def round_assignment(G, T, A, L):
             BlockedSides[u] = {}
 
     assert len(AssignedNodes) == len(G)
-    return AssignedNodes, BlockedSides
+    return AssignedNodes, AssignedCells, BlockedSides
 
 
-def find_assignment_qap(G, T, A):
+def find_assignment_qap(G, T):
     """Return an assignment of nodes to cells"""
+    print >> sys.stderr, "Building QAP matrix..."
+    A = build_qap_matrix(G, T)
+    r,c = np.shape(A)
+    print >> sys.stderr, "Solving quadratic assignment problem..."
 
     L = leading_eig_power(A)
     L = sorted(enumerate(L), key=lambda x: x[1].real, reverse=True)
@@ -439,6 +597,7 @@ def construct_routing_graph(T, occupied):
 
     return H
 
+
 def construct_routing_graph_edges(T):
     H = nx.Graph()
 
@@ -461,26 +620,31 @@ def construct_routing_graph_edges(T):
                     H.add_edge(corner, "s_%d_%s" % (c, s))
 
             # get the cells across from this corner
-            cn1 = T.neighbors(c)[cs1]
-            cn2 = T.neighbors(c)[cs2]
-            junction = "j_%d_%d_%d" % tuple(sorted(c,cn1,cn2))
+            cn1 = T.neighbors(c)[cs1] if cs1 in T.neighbors(c) else None
+            cn2 = T.neighbors(c)[cs2] if cs2 in T.neighbors(c) else None
+
+            if cn1 is not None and cn2 is not None:
+                junction = "j_%d_%d_%d" % tuple(sorted([c,cn1,cn2]))
             
-            # add corner to junction
-            H.add_edge(corner, junction)
+                # add corner to junction
+                H.add_edge(corner, junction)
             
             # add backward channel edges
-            cm, dm = min(c,cn1), max(c,cn1)
-            g = "g_%d_%d" % (cm, dm)
-            H.add_edge(junction, g)              # para channel
-            H.add_edge("s_%d_%s" % (c, cs1), g)  # perp channel
+            if cn1 is not None:
+                cm, dm = min(c,cn1), max(c,cn1)
+                g = "g_%d_%d" % (cm, dm)
+                H.add_edge(junction, g)              # para channel
+                H.add_edge("s_%d_%s" % (c, cs1), g)  # perp channel
             
             # add forward channel edges
-            cm, dm = min(c,cn2), max(c,cn2)
-            g = "g_%d_%d" % (cm, dm)
-            H.add_edge(junction, g)             # para channel
-            H.add_edge("s_%d_%s" % (c, cs2), g) # para channel
+            if cn2 is not None:
+                cm, dm = min(c,cn2), max(c,cn2)
+                g = "g_%d_%d" % (cm, dm)
+                H.add_edge(junction, g)             # para channel
+                H.add_edge("s_%d_%s" % (c, cs2), g) # para channel
             
     return H
+
 
 def weight_routing_graph(RGraph, G, c2n):
     NODE_CROSSING_COST = 10
@@ -488,23 +652,24 @@ def weight_routing_graph(RGraph, G, c2n):
     SMALL_GAP_COST = 0.5
     LONG_GAP_COST = NODE_CROSSING_COST / 2.0
 
+    ToDelete = []
     for u, v in RGraph.edges_iter():
-        if us > vs: us, vs = vs, us
+        if u > v: u, v = v, u
         us = u.split('_')
         vs = v.split('_')
         etype = us[0] + vs[0]
 
         # side-to-side edges 
-        if etype = 'ss':      
+        if etype == 'ss':      
             cu, cv = int(us[1]), int(vs[1])
             assert cu == cv
-            w = NODE_CROSSING_COST if cu in occupied else EDGE_COST
+            w = NODE_CROSSING_COST if cu in c2n else EDGE_COST
 
         # corner-to-side edges
         elif etype == 'cs':   
             cu, cv = int(us[1]), int(vs[1])
             assert cu == cv
-            w = NODE_CROSSING_COST if cu in occupied else EDGE_COST
+            w = NODE_CROSSING_COST if cu in c2n else EDGE_COST
 
         # side-to-gap edges
         elif etype == 'gs':
@@ -512,17 +677,23 @@ def weight_routing_graph(RGraph, G, c2n):
             c = int(vs[1])
             assert c == a or c == b
             # if cells a and c are blocked, add weight, else delete
-            w = None if G.has_edge(c2n[a], c2n[b]) else SMALL_GAP_COST
+            if a not in c2n or b not in c2n or G.has_edge(c2n[a], c2n[b]):
+                w = None
+            else:
+                w = SMALL_GAP_COST
 
         elif etype == 'gj':   # gap-to-junction edges
             a, b = int(us[1]), int(us[2])
-            w = None if G.has_edge(c2n[a], c2n[b]) else w = LONG_GAP_COST
+            if a not in c2n or b not in c2n or G.has_edge(c2n[a], c2n[b]):
+                w = None
+            else:
+                w = LONG_GAP_COST
 
         # corner-to-junction edges
         elif etype == 'cj':   
             cu = int(us[1])
-            for j in  int(x for x in vs[1:]):
-                if G.has_edge(c2n[cu], c2n[j]):
+            for j in (int(x) for x in vs[1:]):
+                if cu not in c2n or j not in c2n or G.has_edge(c2n[cu], c2n[j]):
                     w = 0.0
                     break
             else:
@@ -531,32 +702,42 @@ def weight_routing_graph(RGraph, G, c2n):
         if w is not None:
             RGraph.edge[u][v]['weight'] = w
         else:
-            ToDelete.add((u,v))
+            ToDelete.append((u,v))
+
+    for u,v in ToDelete:
+        RGraph.remove_edge(u,v)
     return RGraph
 
-def route_remaining_edges(G, T, n2c, c2n):
-    H = construct_routing_graph_edges(T)
-    weight_routing_graph(H, G, c2n)
-    nx.write_edgelist(H, "hex.graph")
 
-    # find shortest paths in the route graph
-    SP = nx.all_pairs_dijkstra_path(H)
-    SP_len = nx.all_pairs_dijkstra_path_length(H)
+def route_remaining_edges(G, T, n2c, c2n):
+    """Return routes for each of the remaining edges"""
+    #H = construct_routing_graph_edges(T)
+    #weight_routing_graph(H, G, c2n)
+    H = construct_routing_graph(T, c2n)
+    nx.write_edgelist(H, "hex.graph")
 
     Routes = []
     for u, v in G.edges_iter():
         c = n2c[u]
         d = n2c[v]
         # find the combination of sides that gives the shortest path
-        best = bestp = None
+        best = best_source = best_target = None
         for s1, s2 in itertools.product(T.hex_sides(),T.hex_sides()):
-            source = "s_%d_%s" % (c, s1)
-            target = "s_%d_%s" % (d, s2)
-            splen = nx.shortest_path_length(G, source, target)
-            if splen < best
-            sp = nx.shortest_path(G, source, target)
+            source = T.side_name(c, s1)
+            target = T.side_name(d, s2)
+            if source in H and target in H:
+                splen = nx.dijkstra_path_length(H, source, target)
+                if splen < best or best is None:
+                    best = splen
+                    best_source = source
+                    best_target = target
+        P = nx.dijkstra_path(H, best_source, best_target)
+        assert all(H.has_edge(P[i], P[i+1]) for i in xrange(len(P)-1))
+        Routes.append(P)
+    return Routes
 
-def route_remaining_edges(G, T, n2c):
+def route_remaining_edges_simple(G, T, n2c):
+    """The original routing function --- not used now"""
     #for u,v in G.edges_iter():
     #    if T.are_adjacent(n2c[u], n2c[v]):
     #        print 'edge (%d,%d) at %d,%d good' % (u,v,n2c[u], n2c[v])
@@ -632,6 +813,7 @@ def k_different_colors(k):
 def color_routes(Routes):
     """Routes is a list of lists; each list is a path in the graph that will be
     drawn. Returns a list of the same length as Routes giving the colors."""
+    if len(Routes) == 0: return []
 
     edge_name = lambda a,b: tuple(sorted((a, b)))
 
@@ -670,6 +852,7 @@ def color_routes(Routes):
 
 def write_hex_layout(filename, G, T, node2cell, P, RouteColors, BlockedSides):
 
+    """BlockedSides is a dictionary from node to a set of strings of the form nw, n, s, etc."""
     with open(filename, "wt") as out:
         print >> out, "T hex %d %d %d" % (T.x,T.y, G.number_of_nodes())
 
@@ -695,11 +878,7 @@ def hex_layout(G, x, y, filename):
     T = HexTiling(x,y)
 
     # assign nodes to cells
-    print >> sys.stderr, "Building QAP matrix..."
-    A = build_qap_matrix(G, T)
-    r,c = np.shape(A)
-    print >> sys.stderr, "Solving quadratic assignment problem..."
-    node2cell, blockedSides = find_assignment_qap(G, T, A)
+    node2cell, cell2node, blockedSides = find_assignment_ilap(G, T)
 
     # route the rest of the edges
 
@@ -707,12 +886,12 @@ def hex_layout(G, x, y, filename):
     # remove the edges from G that we have taken care of
     G.remove_edges_from([(u,v)
         for u,v in G.edges_iter()
-            if T.are_adjacent(n2c[u], n2c[v])
+            if T.are_adjacent(node2cell[u], node2cell[v])
         ])
 
     print >>sys.stderr, "%d edges remain." % (G.number_of_edges())
     print >> sys.stderr, "Routing remaining edges..."
-    P = route_remaining_edges(G, T, node2cell)
+    P = route_remaining_edges(G, T, node2cell, cell2node)
 
     # choose colors for the edges
     RouteColors = color_routes(P)
@@ -740,8 +919,8 @@ def main():
     #G = nx.path_graph(10)
     #G = number_nodes(nx.hypercube_graph(4))
     #G = number_nodes(nx.grid_graph(dim=[4,4]))
-    #G = number_nodes(nx.ladder_graph(20))
+    #G = number_nodes(nx.complete_graph(7))
     G = number_nodes(nx.read_gml(sys.argv[1]))
-    hex_layout(G, 12, 15, "hex.layout")
+    hex_layout(G, 10, 12, "hex.layout")
 
 if __name__ == "__main__": main()
