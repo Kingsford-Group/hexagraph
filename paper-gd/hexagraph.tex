@@ -33,8 +33,133 @@ font size and be inset 1.0 cm from the right and left margins.
 There will be two blank lines before and after the Abstract. \dots
 \keywords{computational geometry, graph theory, Hamilton cycles}
 \end{abstract}
-%
+
+%-----------------------------------------------------------------------
 \section{Introduction}
+
+
+%-----------------------------------------------------------------------
+\section{Layout Algorithms}
+
+\subsection{Tile assignment as a quadratic program}
+
+\subsection{Iterative, randomized linear assignment for assigning nodes to
+tiles}
+
+\paragraph{Iterative linear assignment}
+
+
+\paragraph{Constructing a matching graph.}
+
+Let $G = (V,E)$ be the graph to draw and let $f : V \rightarrow T$ be a 1-to-1
+function from its nodes to the tiles $T$ of a planar tiling. We define a
+weighted bipartite graph $H_G(f) = (V \cup T, A, w)$ with edge set $A$ and
+their weights $w$ as follows.
+
+\newcommand\neighT{\ensuremath\mathcal{N}_{\textit{\footnotesize tile}}}
+\newcommand\neighG{\ensuremath\mathcal{N}_{\textit{\footnotesize gr}}}
+
+Let $\neighT(c)$ be the set of cells that are adjacent to $c$.  A cell $c$ is
+\emph{blocked} for a node $u$ if there is some existing assignment of another
+node that is not an neighbor of $u$ to an adjacent cell. In other words, a cell
+$c$ is blocked for $u$ if there is a $v\in V$ such that $f(v) \in \neighT(c)$
+but $\{u,v\}$ is not an edge of $G$. Define the blocking number $B_f(u,c)$ to
+be the number of witnesses $v$ to $c$ being blocked for $u$ under $f$.
+Similarly, we say a cell is \emph{attractive} for $u$ if there is at least one
+$v\in V$ such that $f(v) \in \neighT(c)$ and $\{u,v\} \in E$. Such edges
+$\{u,v\}$ would be \emph{satisfied} by the assignment $f(u) = c$. Define the
+satisfaction number $S_f(u,c)$ to be the number of satisfied edges incident to
+$u$.
+
+We add edge $(u,c)$ to $H_G$ if either $c$ is not blocked for $u$ or $c$ is
+attractive for $u$. The weight $w(u,c)$ is set to
 %
+\begin{equation}\label{eqn:weight}
+%
+     w(u,c) = R\times S_f(u,c) + \sum_{v \in \neighG(u)} d(c,f(v)),
+%
+\end{equation}
+%
+where $R$ is a parameter specifying the reward for satisfying an edge and
+$d(c,d)$ is a function that is decreasing as the planar distance between the
+cells $c$ and $d$ increases. For the experiments reported here, we take
+$R=1000$ and $d(c,d) = 500 / h_{cd}$ where $h_{cd}$ is a Euclidean distance
+between the centers of $c$ and $d$ divided by the hexagon radius. This choice
+for $w(u,c)$ rewards satisfying edges and rewards placing the endpoints of
+unsatisfied edges nearby (because $d(c,d)$ will be high). Finally, it also
+implicitly makes high-degree nodes more important. Equation~\ref{eqn:weight} is
+but one choice of possible weight function, and the algorithms below work for
+any positive-valued function.
+
+\paragraph{Avoiding poor local minima.}
+
+The iterative linear assignment procedure described above often gets stuck in
+poor local minima or it oscillates between two poor solutions. To solve this,
+we add an inertia effect that randomly keeps a subset of nodes in their current
+cells. Specifically, let $\sigma_t$ be a real number in $(0,1]$. For every $u$,
+with probability $\sigma_t$, instead of adding the edges to $A$ described
+above, we add the single edge $(u,f(u))$ with weight $1000$. This forces a
+subset of expected size $\sigma_t |V|$ of nodes to remain fixed. For the
+experiments here, we start with $\sigma_t = 1/200$ and increase it by $1/200$
+each iteration.
+
+\paragraph{Handling unmatched nodes.}
+
+Because $A$ is not complete and $f$ must be 1-to-1, the maximum weight matching
+may not match every node to a cell. This is particularly likely to happen with
+nodes that were chosen to be inertia nodes since they have only a single cell
+to which they can match, and some other node may match to that cell thus
+preventing the inertia node from being assigned anyplace.
+
+To overcome this, we run a second matching just for the nodes that were
+unmatched during the first round.  In this second matching, we create a new
+there are edges $(u,c)$ between a node $u$ and any cell $c$ that is not blocked
+for $u$ when fixing the assignments from the first matching. All the edge
+weights are $1$. Because the tiling field is chosen to be large enough, the
+maximum matching in this second graph will always include an assignment of
+every node to some cell.
+
+% IDEA: only compute costs against inertia nodes.
+
+\begin{algorithmic}
+\State f \gets \call{InitialAssignment}(G,T)
+\State 
+\end{algorithmic}
+
+
+
+
+
+\paragraph{Choice of initial assignment.}
+
+
+
+
+%- (u,c) if either c is not blocked or c is attractive 
+%    weight = 1000 * number of satisfied edges  + \sum_{neig} 500/celldist 
+%- with decreasing inertia we add an edge $(u,f(u))$ of weight 1000.
+
+
+
+
+\subsection{Relaxing the requirement that adjacent tiles encode edges}
+
+\subsection{Routing non-satisfied edges}
+
+\subsection{Coloring non-satisfied edges}
+
+%-----------------------------------------------------------------------
+\section{Results}
+
+\subsection{Spectral approximation to the quadratic assignment problem}
+
+\subsection{Timing of the iterative linear assignment approach}
+
+\subsection{Quality of layout for near-planar graphs}
+
+\subsection{Example tiled layouts}
+
+%-----------------------------------------------------------------------
+\section{Conclusion}
 
 \end{document}
