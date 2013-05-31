@@ -6,6 +6,7 @@
 \documentclass{llncs}
 %
 \usepackage{makeidx}  % allows for indexgeneration
+\usepackage[noend]{algpseudocode}
 %
 \begin{document}
 %
@@ -46,14 +47,28 @@ There will be two blank lines before and after the Abstract. \dots
 \subsection{Iterative, randomized linear assignment for assigning nodes to
 tiles}
 
-\paragraph{Iterative linear assignment}
+\paragraph{Iterative linear assignment.}
 
+\begin{algorithmic}[1]
+\State $\sigma_t \gets 1/200$
+\State $f'' \gets \Call{InitialAssignment}{G,T}$
+\Repeat
+    \State $f \gets f''$
+    \State $M_G(f,\sigma_t) \gets \Call{CreateMatchGraph}{f,\sigma_t}$
+    \State $f' \gets \Call{MaximumWeightMatching}{M_G(f,\sigma_t)}$
+    \State $f'' \gets \Call{PlaceUnplacedNodes}{f'}$
+    \State $\sigma_t \gets \sigma_t + 1 / 200$
+\Until{$f'' = f$} 
+\end{algorithmic}
+
+
+\paragraph{Choice of initial assignment.}
 
 \paragraph{Constructing a matching graph.}
 
 Let $G = (V,E)$ be the graph to draw and let $f : V \rightarrow T$ be a 1-to-1
 function from its nodes to the tiles $T$ of a planar tiling. We define a
-weighted bipartite graph $H_G(f) = (V \cup T, A, w)$ with edge set $A$ and
+weighted bipartite graph $M_G(f) = (V \cup T, A, w)$ with edge set $A$ and
 their weights $w$ as follows.
 
 \newcommand\neighT{\ensuremath\mathcal{N}_{\textit{\footnotesize tile}}}
@@ -71,7 +86,7 @@ $\{u,v\}$ would be \emph{satisfied} by the assignment $f(u) = c$. Define the
 satisfaction number $S_f(u,c)$ to be the number of satisfied edges incident to
 $u$.
 
-We add edge $(u,c)$ to $H_G$ if either $c$ is not blocked for $u$ or $c$ is
+We add edge $(u,c)$ to $M_G$ if either $c$ is not blocked for $u$ or $c$ is
 attractive for $u$. The weight $w(u,c)$ is set to
 %
 \begin{equation}\label{eqn:weight}
@@ -121,16 +136,6 @@ every node to some cell.
 
 % IDEA: only compute costs against inertia nodes.
 
-\begin{algorithmic}
-\State f \gets \call{InitialAssignment}(G,T)
-\State 
-\end{algorithmic}
-
-
-
-
-
-\paragraph{Choice of initial assignment.}
 
 
 
