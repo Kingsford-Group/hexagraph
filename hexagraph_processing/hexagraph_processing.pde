@@ -401,6 +401,7 @@ void setup() {
 
   fill(#81A9ED);
   drawNodes(assignment, hexCenters);
+  strokeWeight(3);
   drawPaths_simple(paths, hexCenters);
   noFill();
   save("hex.png");
