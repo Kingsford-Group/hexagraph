@@ -1,0 +1,18 @@
+T hex 10 10 15
+A 0 41 Strozzi 
+A 1 42 Tornabuoni sw,ne
+A 2 22 Medici 
+A 3 32 Albizzi sw,n
+A 4 62 Guadagni 
+A 5 3 Pazzi s
+A 6 2 Acciaiuoli sw,se
+A 7 51 Bischeri s,ne,n
+A 8 30 Peruzzi 
+A 9 23 Ginori nw,n
+A 10 12 Salviati s,se,nw
+A 11 21 Castellani se
+A 12 71 Lamberteschi n
+A 13 31 Ridolfi s,nw,n
+A 14 11 Barbadori s,ne
+P c=253.172269742,38.9005498137,38.9005498137 s_32_s s_52_sw
+P c=253.172269742,38.9005498137,38.9005498137 s_51_sw s_50_se s_30_s

@@ -1,0 +1,73 @@
+T hex 10 20 48
+A 0 11 BL s,sw,ne,nw
+A 1 4 TEXT se
+A 2 53 V2 nw,sw,se,n
+A 3 44 B12 s,se
+A 4 64 B10 nw,n
+A 5 5 B8a 
+A 6 54 VIDEO nw,n
+A 7 15 B8b ne
+A 8 24 B13b sw,se
+A 9 22 A10 sw,ne
+A 10 42 B13a s,sw,ne
+A 11 35 A12A ne,nw
+A 12 16 A12B sw,nw
+A 13 6 HIRESDATA sw,se
+A 14 52 A3 n
+A 15 2 LD194 sw
+A 16 3 DL3 s
+A 17 58 DL2 se,n
+A 18 29 DL1 sw,se
+A 19 69 DL0 ne,nw
+A 20 49 A5 
+A 21 30 DL6 sw,ne,n
+A 22 51 DL5 sw,ne,se,n
+A 23 61 DL4 ne,nw
+A 24 32 A9 s,sw
+A 25 31 DL7 s,ne,n
+A 26 8 14M 
+A 27 25 RAS sw,se
+A 28 59 VA sw,n
+A 29 39 VB s,nw
+A 30 38 VC s,ne
+A 31 63 LDPS ne,n
+A 32 33 V4 s,sw,ne,nw
+A 33 62 7M+ nw,n
+A 34 7 A11b 
+A 35 1 7M- sw,se
+A 36 21 A8 sw,ne
+A 37 34 MIXED s,nw,ne,n
+A 38 50 B11a ne,se
+A 39 26 B11b sw,ne
+A 40 23 A11a s,se,n
+A 41 36 HIRES 
+A 42 10 H0 s,ne
+A 43 12 B4 sw
+A 44 14 B5 s,nw
+A 45 43 B2 s,ne,se,n
+A 46 40 B3 ne
+A 47 41 B9 sw
+P c=166.139773646,47.3502916667,249.292411031 s_64_sw s_73_sw s_72_se s_52_s s_32_s
+P c=166.139773646,47.3502916667,249.292411031 s_64_se s_65_sw s_55_sw s_46_sw s_46_se s_47_sw s_37_sw s_28_sw s_8_s
+P c=254.126851527,27.9751686448,27.9751686448 s_22_sw s_21_se
+P c=254.126851527,27.9751686448,27.9751686448 s_22_se s_32_se
+P c=254.126851527,27.9751686448,27.9751686448 s_22_se s_32_s s_52_s s_72_se s_73_sw s_73_se s_74_sw s_65_sw s_55_sw s_46_sw s_46_se s_47_sw s_37_sw s_28_sw s_8_s
+P c=254.126851527,27.9751686448,27.9751686448 s_42_s s_62_sw s_71_sw s_70_se s_50_s
+P c=231.644168302,15.7053051099,245.140347252 s_35_se s_46_se s_47_sw s_27_s s_16_se
+P c=254.474882552,101.651298472,18.2929798831 s_16_se s_27_s s_47_sw s_46_se s_46_sw s_55_sw s_65_sw s_74_sw s_73_se s_73_sw s_72_se s_52_s s_32_s
+P c=247.58444268,184.180181215,32.0099536983 s_52_s s_72_se s_73_sw s_73_se s_74_sw s_65_sw s_55_sw s_46_sw s_46_se s_47_sw s_37_sw s_37_se s_48_se s_49_sw
+P c=241.28929252,253.991677726,38.0511292371 s_52_s s_72_se s_73_sw s_73_se s_74_sw s_65_sw s_55_sw s_46_sw s_46_se s_47_sw s_37_sw s_28_sw s_8_s
+P c=254.090979958,47.0394453472,193.193469778 s_3_se s_13_se s_24_se s_34_se s_45_se s_46_sw s_46_se s_47_sw s_37_sw s_37_se s_48_se s_49_sw
+P c=155.464958492,246.059976215,26.0435046007 s_58_sw s_57_se s_47_se s_47_sw s_46_se s_46_sw s_55_sw s_65_sw s_74_sw s_73_se s_73_sw s_72_se s_52_s s_32_s s_12_s
+P c=94.7075858161,253.337687719,45.8983236923 s_18_se s_18_sw s_28_sw s_37_sw s_47_sw s_46_se s_46_sw s_55_sw s_65_sw s_74_sw s_73_se s_73_sw s_72_se s_52_s s_32_s s_12_s
+P c=51.5221120256,245.775847934,74.3754927207 s_69_sw s_68_se s_57_se s_47_se s_47_sw s_46_se s_46_sw s_55_sw s_65_sw s_74_sw s_73_se s_73_sw s_72_se s_52_s s_32_s s_12_s
+P c=48.2704244336,247.568715728,142.057855631 s_49_sw s_48_se s_37_se s_37_sw s_47_sw s_46_se s_46_sw s_55_sw s_65_sw s_74_sw s_73_se s_73_sw s_72_se s_72_sw s_71_se s_51_s
+P c=49.5523215797,247.75166824,212.775312947 s_49_sw s_48_se s_37_se s_37_sw s_47_sw s_46_se s_46_sw s_55_sw s_65_sw s_74_sw s_73_se s_73_sw s_72_se s_72_sw s_71_se s_61_se
+P c=26.5142183415,210.55690399,249.994622344 s_32_s s_52_s s_72_se s_73_sw s_73_se s_74_sw s_65_sw s_55_sw s_46_sw s_46_se s_47_sw s_27_s s_7_s
+P c=254.126851527,27.9751686448,27.9751686448 s_32_sw s_42_sw s_41_se
+P c=253.041879485,52.6658044478,123.386772108 s_8_s s_28_sw s_37_sw s_47_sw s_46_se s_46_sw s_45_se s_34_se s_24_se s_13_se s_13_sw
+P c=19.6388422425,125.241534553,244.044563403 s_8_s s_28_sw s_37_sw s_47_sw s_46_se s_46_sw s_55_sw s_65_sw s_74_sw s_73_se s_73_sw s_72_se s_52_s s_32_s s_12_s
+P c=42.4311482184,67.0652316307,251.820857223 s_38_sw s_37_se s_37_sw s_47_sw s_46_se s_46_sw s_55_sw s_65_sw s_74_sw s_73_se s_73_sw s_72_se s_72_sw s_71_se s_51_s s_31_s s_21_se
+P c=97.3628173338,51.6119874032,246.053014608 s_7_s s_27_s s_47_sw s_46_se s_46_sw s_55_sw s_65_sw s_74_sw s_73_se s_73_sw s_72_se s_72_sw s_71_se s_51_s s_31_s s_21_se
+P c=254.474882552,101.651298472,18.2929798831 s_21_se s_22_sw s_12_sw
+P c=231.644168302,15.7053051099,245.140347252 s_21_se s_31_s s_51_s s_71_se s_72_sw s_72_se s_73_sw s_73_se s_74_sw s_65_sw s_45_s s_25_s s_14_se

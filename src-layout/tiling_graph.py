@@ -220,13 +220,13 @@ def make_initial_assignments(G, T):
         if u not in n2c and v not in n2c:
             n2c[u] = c
             n2c[v] = c+1
-            c += 3
+            c += 1
 
     # put unassinged nodes lined up at the end
     for u in G.nodes_iter():
         if u not in n2c:
             n2c[u] = c
-            c += 2
+            c += 1
 
     # construct c2n
     c2n = {c:u for u,c in n2c.iteritems()}
@@ -914,13 +914,19 @@ def number_nodes(G):
     return H
         
 def main():
+    name = sys.argv[1]
     #graph=sys.argv[1]
     #G = nx.read_edgelist(graph)
     #G = nx.path_graph(10)
     #G = number_nodes(nx.hypercube_graph(4))
     #G = number_nodes(nx.grid_graph(dim=[4,4]))
     #G = number_nodes(nx.complete_graph(7))
-    G = number_nodes(nx.read_gml(sys.argv[1]))
-    hex_layout(G, 10, 12, "hex.layout")
+    #G = number_nodes(nx.random_powerlaw_tree(300, tries=10000))
+    #G = number_nodes(nx.read_gml(sys.argv[2]))
+    #G = number_nodes(nx.florentine_families_graph())
+    #G = number_nodes(nx.read_adjlist(sys.argv[2]))
+    G = number_nodes(nx.read_edgelist(sys.argv[2]))
+    nx.write_edgelist(G, name + "-in.graph")
+    hex_layout(G, 10, 20, name + ".layout")
 
 if __name__ == "__main__": main()

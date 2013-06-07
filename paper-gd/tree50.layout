@@ -1,0 +1,54 @@
+T hex 10 12 50
+A 0 10 0 s
+A 1 1 1 
+A 2 11 2 s,se
+A 3 2 3 s
+A 4 12 4 s,ne,se
+A 5 22 5 s,nw,se,n
+A 6 31 6 n
+A 7 42 7 n
+A 8 32 8 nw,n
+A 9 23 9 ne,nw
+A 10 3 10 sw
+A 11 13 11 sw,ne
+A 12 24 12 s,ne,se
+A 13 4 13 sw
+A 14 14 14 sw,se
+A 15 5 15 
+A 16 15 16 sw,se
+A 17 35 17 se,nw
+A 18 26 18 nw,ne,n
+A 19 36 19 sw,n
+A 20 27 20 s,ne,nw
+A 21 7 21 
+A 22 50 22 
+A 23 64 23 s,se,n
+A 24 54 24 ne,n
+A 25 74 25 ne,nw
+A 26 68 26 
+A 27 48 27 sw,se,nw
+A 28 34 28 s,sw,ne,se,nw
+A 29 25 29 s,sw,ne,se,nw
+A 30 6 30 s,se
+A 31 45 31 s,nw,sw,n
+A 32 46 32 ne,nw
+A 33 47 33 ne,se,n
+A 34 37 34 s,sw,se,n
+A 35 17 35 s,sw
+A 36 16 36 s,sw,se,nw
+A 37 30 37 sw,n
+A 38 40 38 ne
+A 39 73 39 se,n
+A 40 53 40 s,ne
+A 41 44 41 s,sw,ne,n
+A 42 65 42 s,sw,n
+A 43 84 43 nw,se,n
+A 44 85 44 sw,n
+A 45 94 45 ne,nw
+A 46 57 46 s,nw,ne,n
+A 47 58 47 s,nw
+A 48 77 48 n
+A 49 78 49 n
+P c=251.513486911,45.4268156554,45.4268156554 s_7_se s_17_se s_28_se s_38_se s_49_s s_69_s s_89_sw s_98_sw s_108_sw s_107_se s_107_sw s_106_se s_106_sw s_105_se s_105_sw s_104_se s_93_se s_83_se s_72_se s_62_se s_51_se s_51_sw s_50_se
+P c=45.2699293156,250.502849496,250.502849496 s_50_se s_51_sw s_51_se s_52_sw s_52_se s_63_se s_64_sw
+P c=251.513486911,45.4268156554,45.4268156554 s_74_se s_75_sw s_66_sw s_66_se s_76_se s_87_se s_88_sw s_68_s

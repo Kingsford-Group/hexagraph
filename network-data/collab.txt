@@ -1,0 +1,1306 @@
+# Nodes (name,x,y,width,height)
+Papamanthou; Charalampos,440,1245,80,30
+Tollis; Ioannis G.,540,1095,80,30
+Doerr; Martin,440,1045,80,30
+Dogrusoz; Ugur,4040,845,80,30
+Giral; Erhan,4040,745,80,30
+Cetintas; Ahmet,4020,595,80,30
+Civril; Ali,4020,665,80,30
+Demir; Emek,3920,595,80,30
+Genc; Burkay,4140,845,80,30
+Six; Janet M.,540,1045,80,30
+Hong; Seok-Hee,2140,615,80,30
+Eades; Peter,2120,1185,80,30
+Eiglsperger; Markus,2740,2865,80,30
+Siebenhaller; Martin,2740,2965,80,30
+Kaufmann; Michael,2520,2785,80,30
+Gutwenger; Carsten,3640,965,80,30
+Mutzel; Petra,3320,1385,80,30
+Buchheim; Christoph,3840,1815,80,30
+Juenger; Michael,3740,1395,80,30
+Kobourov; Stephen G.,3240,1915,80,30
+Pitta; Chandan,3740,2015,80,30
+Koren; Yehuda,3140,815,80,30
+Harel; David,3240,815,80,30
+Di Battista; Giuseppe,2320,2385,80,30
+Mariani; Federico,2040,2415,80,30
+Patrignani; Maurizio,2220,2285,80,30
+Pizzonia; Maurizio,1840,2365,80,30
+Bekos; Michael A.,2140,2765,80,30
+Symvonis; Antonios,2220,2535,80,30
+Wolff; Alexander,980,2195,80,30
+Shahrokhi; Farhad,2040,3045,80,30
+Sykora; Ondrej,2140,3145,80,30
+Szekely; Laszlo A.,2040,3145,80,30
+Vrt'o; Imrich,2140,2945,80,30
+Healy; Patrick,240,665,80,30
+Lynch; Karol,240,765,80,30
+Brandes; Ulrik,2220,1785,80,30
+Cornelsen; Sabine,1740,1615,80,30
+Wagner; Dorothea,1740,1865,80,30
+Cortese; Pier Francesco,2220,2735,80,30
+Di Giacomo; Emilio,2720,2435,80,30
+Didimo; Walter,2620,2335,80,30
+Liotta; Giuseppe,2820,2185,80,30
+Meijer; Henk,2520,2735,80,30
+Dickerson; Matthew,3320,1535,80,30
+Eppstein; David,2940,1765,80,30
+Goodrich; Michael T.,3120,1735,80,30
+Meng; Jeremy Yu,2920,1435,80,30
+de Fraysseix; Hubert,640,315,80,30
+Ossona de Mendez; Patrice,840,315,80,30
+Nagamochi; Hiroshi,1840,495,80,30
+Kuroya; Katsutoshi,1840,395,80,30
+Bonichon; Nicolas,240,165,80,30
+Felsner; Stefan,340,65,80,30
+Mosbah; Mohamed,440,165,80,30
+Finkel; Benjamin,240,1045,80,30
+Tamassia; Roberto,240,1095,80,30
+Jourdan; Guy-Vincent,1240,865,80,30
+Rival; Ivan,1140,715,80,30
+Zaguia; Nejib,1340,715,80,30
+Gotsman; Craig,3040,765,80,30
+Hachul; Stefan,3850,1295,80,30
+Andersen; Reid,540,865,80,30
+Chung; Fan,540,665,80,30
+Lu; Lincoln,640,765,80,30
+Baur; Michael,1840,1765,80,30
+Gaertler; Marco,1720,1685,80,30
+Goerg; Carsten,840,565,80,30
+Birke; Peter,940,515,80,30
+Pohl; Mathias,940,615,80,30
+Diehl; Stephan,1040,565,80,30
+Demetrescu; Camil,1140,865,80,30
+Finocchi; Irene,1240,715,80,30
+Italiano; Giuseppe F.,1340,865,80,30
+Suderman; Matthew,3040,2765,80,30
+Whitesides; Sue,2820,2535,80,30
+Demaine; Erik D.,2940,2765,80,30
+Hajiaghayi; MohammadTaghi,2940,2815,80,30
+Dujmovic; Vida,2840,2865,80,30
+Fernau; Henning,2840,2815,80,30
+Efrat; Alon,3620,1885,80,30
+Erten; Cesim,3840,2115,80,30
+Dyck; Breanne,3140,2815,80,30
+Joevenazzo; Jill,3340,2665,80,30
+Nickle; Elspeth,3140,2715,80,30
+Wilsdon; Jon,3440,2715,80,30
+Wismath; Stephen,3120,2585,80,30
+Kupke; Joachim,3640,865,80,30
+Klein; Karsten,3320,985,80,30
+Leipert; Sebastian,4040,795,80,30
+Brandenburg; Franz J.,2720,1485,80,30
+Marks; Joe,2320,1485,80,30
+Gansner; Emden R.,3120,1485,80,30
+North; Stephen,2820,1085,80,30
+Duncan; Christian A.,3420,1335,80,30
+Harding; Philipp J.,3640,2065,80,30
+Wampler; Kevin,3840,2165,80,30
+Yee; Gary V.,3540,2365,80,30
+Pich; Christian,2440,1715,80,30
+Forrester; David,3220,2285,80,30
+Navabi; Armand,3440,2065,80,30
+Bachmaier; Christian,2220,1235,80,30
+Forster; Michael,2440,865,80,30
+Holleis; Paul,2420,1385,80,30
+Raitner; Marcus,2540,915,80,30
+Murray; Colin,2340,765,80,30
+Friedrich; Carsten,2240,815,80,30
+Aziza; Shabnam,1940,1315,80,30
+Biedl; Therese,1940,1365,80,30
+Pach; Janos,340,1895,80,30
+Toth; Geza,340,1845,80,30
+Balogh; Jozsef,3140,515,80,30
+Salazar; Gelasio,3140,615,80,30
+Ebner; Dietmar,3620,1385,80,30
+Klau; Gunnar W.,3520,1685,80,30
+Weiskircher; Rene,4040,1665,80,30
+Torok; Lubomir,2240,2895,80,30
+Wood; David R.,3000,2935,80,30
+Kyncl; Jan,540,1845,80,30
+Nakano; Shin-ichi,1300,2475,80,30
+Uno; Takeaki,1200,2425,80,30
+Newton; Matthew,2240,3045,80,30
+Uzovic; Martin,2240,3145,80,30
+Zhang; Huaming,540,765,80,30
+He; Xin,540,715,80,30
+Rahman; Md. Saidur,940,1165,80,30
+Egi; Noritsugu,840,1065,80,30
+Nishizeki; Takao,940,1065,80,30
+Por; Attila,3120,2915,80,30
+Cerny; Jakub,440,1745,80,30
+Dvorak; Zdenek,340,1695,80,30
+Jelinek; Vit,440,1645,80,30
+Kara; Jan,540,1695,80,30
+Akkerman; Thorsten,3740,1815,80,30
+Teske; Daniel,3740,1765,80,30
+Cabello; Sergio,2820,2685,80,30
+Rote; Guenter,2940,2715,80,30
+Le; Vu,4040,1815,80,30
+Boyer; John M.,1920,2535,80,30
+Merrick; Damian,2120,1435,80,30
+do Nascimento; Hugo A.D.,1940,1015,80,30
+Sugiyama; Kozo,2040,615,80,30
+Maeda; Atsuhiko,2040,565,80,30
+Kitching; Matthew,2620,2885,80,30
+Hui; Peter,4350,1745,80,30
+Schaefer; Marcus,4140,1765,80,30
+Stefankovic; Daniel,4240,1665,80,30
+Kratochvil; Jan,840,1815,80,30
+Pergel; Martin,740,1615,80,30
+Dean; Alice M.,240,415,80,30
+Gethner; Ellen,340,315,80,30
+Hutchinson; Joan P.,240,315,80,30
+Baudel; Thomas,4050,1395,80,30
+Haible; Bruno,4150,1345,80,30
+Sander; Georg,4050,1345,80,30
+Murtagh; Tom,2040,665,80,30
+Vasiliu; Adrian,3940,1365,80,30
+Abello; James,3340,2015,80,30
+Yusufov; Roman,3440,2165,80,30
+Dwyer; Tim,2640,765,80,30
+Schreiber; Falk,2920,1285,80,30
+Asano; Yasuhito,740,1065,80,30
+Noellenburg; Martin,980,2345,80,30
+Evans; William,340,415,80,30
+Laison; Joshua D.,340,515,80,30
+Safari; Mohammad Ali,440,415,80,30
+Trotter; William T.,440,315,80,30
+Lueker; George S.,2820,1685,80,30
+Sun; Jonathan Z.,2940,1665,80,30
+Miura; Kazuyuki,940,1265,80,30
+Azuma; Machiko,1140,1065,80,30
+Deng; Xiaotie,2320,1235,80,30
+Bilgic; Mustafa,740,65,80,30
+Licamele; Louis,740,165,80,30
+Getoor; Lise,640,165,80,30
+Shneidermann; Ben,840,165,80,30
+Ho; Joshua,2220,685,80,30
+Devillers; Olivier,2920,2285,80,30
+Everett; Hazel,3220,2085,80,30
+Lazard; Sylvain,3220,2485,80,30
+Pentcheva; Maria,3420,2235,80,30
+Fleischer; Daniel,2240,1665,80,30
+Puppe; Thomas,2140,1665,80,30
+Marriott; Kim,2840,715,80,30
+Stuckey; Peter J.,2640,965,80,30
+Xu; Kai,2440,365,80,30
+Nikolov; Nikola S.,2420,585,80,30
+Koschutzki; Dirk,2340,465,80,30
+Ahmed; Adel,2640,565,80,30
+Fu; Xiaoyan,2220,535,80,30
+Taib; Ronnie,2340,365,80,30
+Tarassov; Alexandre,2540,665,80,30
+Trotta; Francesco,2820,2735,80,30
+Wybrow; Michael,3020,1035,80,30
+Huang; Weidong,1940,915,80,30
+Lubiw; Anna,1840,1315,80,30
+Spriggs; Michael,1840,1415,80,30
+Chimani; Markus,3540,965,80,30
+Pelsmajer; Michael J.,4340,1615,80,30
+de Berg; Mark,1740,2415,80,30
+Mumford; Elena,1740,2315,80,30
+Speckmann; Bettina,2320,2535,80,30
+Valtr; Pavel,540,1895,80,30
+Magdon-Ismail; Malik,4120,545,80,30
+Bocek-Rivele; Eli,4120,595,80,30
+Frati; Fabrizio,2720,2235,80,30
+Rosenstiehl; Pierre,740,315,80,30
+Geyer; Markus,2120,2865,80,30
+Giordano; Francesco,2420,2585,80,30
+Lee; Bongshin,3220,285,80,30
+Sims Parr; Cynthia,3320,115,80,30
+Plaisant; Catherine,3220,215,80,30
+Bederson; Benjamin B.,3120,115,80,30
+Grilli; Luca,3020,2485,80,30
+Yildiz; Canan,3240,1265,80,30
+Barth; Wilhelm,3340,1265,80,30
+Schlieper; Barbara,2340,1815,80,30
+Hirsch; Michael,2340,2715,80,30
+Rappaport; David,2340,2765,80,30
+Estrella-Balderrama; Alejandro,4240,1815,80,30
+Fowler; J. Joseph,3620,1635,80,30
+Dillencourt; Michael B.,3020,1385,80,30
+Dangelmayr; Cornelia,240,65,80,30
+Keszegh; Balazs,240,1795,80,30
+Palvoelgyi; Doemoetoer,240,1895,80,30
+Purchase; Helen C.,840,465,80,30
+Hoggan; Eve,840,665,80,30
+Benkert; Marc,1300,2565,80,30
+Landis; Matthew,3540,1965,80,30
+Hlineny; Petr,3120,685,80,30
+Fox; Jacob,340,1945,80,30
+Toth; Csaba D.,240,1945,80,30
+Matsuno; Tetsuya,1040,1065,80,30
+Gudmundsson; Joachim,2120,1835,80,30
+Telle; Jan Arne,3020,3015,80,30
+Buchsbaum; Adam L.,3420,1585,80,30
+Procopiuc; Cecilia M.,3040,1815,80,30
+Venkatasubramanian; Suresh,3340,1815,80,30
+van Kreveld; Marc,2240,2215,80,30
+Zickfeld; Florian,440,65,80,30
+Cappos; Justin,4240,1915,80,30
+Massow; Mareike,340,165,80,30
+Carlson; Josiah,2840,1765,80,30
+Lehmann; Katharina A.,2440,3115,80,30
+Kottler; Stephan,2430,3035,80,30
+Haverkort; Herman,1200,2575,80,30
+Kroll; Moritz,1200,2665,80,30
+Angelini; Patrizio,2620,2585,80,30
+Jelinkova; Eva,940,1615,80,30
+Suchy; Ondrej,540,1595,80,30
+Vyskocil; Tomas,840,1715,80,30
+Atienza; Nieves,980,2795,80,30
+de Castro; Natalia,580,2645,80,30
+Cortes; Carmen,680,2745,80,30
+Garrido; M. Angeles,780,2645,80,30
+Grima; Clara I.,580,2495,80,30
+Hernandez; Gregorio,780,2295,80,30
+Marquez; Alberto,1080,2645,80,30
+Moreno; Auxiliadora,680,2345,80,30
+Portillo; Jose Ramon,1100,2515,80,30
+Reyes; Pedro,900,2515,80,30
+Valenzuela; Jesus,780,2445,80,30
+Villar; Maria Trinidad,880,2795,80,30
+Brunner; Wolfgang,2220,1485,80,30
+Koenig; Christof,2220,1365,80,30
+Nachmanson; Lev,3320,885,80,30
+Robertson; George,2920,585,80,30
+Schmidt; Jens M.,3120,985,80,30
+Potika; Katerina,2240,2815,80,30
+Goerke; Robert,1640,1765,80,30
+Binucci; Carla,2520,2135,80,30
+Krug; Marcus,1540,2215,80,30
+Goaoc; Xavier,680,2495,80,30
+Okamoto; Yoshio,840,2165,80,30
+Shin; Chan-Su,500,2325,80,30
+Sadasivam; Sadish,540,815,80,30
+Harrigan; Martin,240,615,80,30
+Gassner; Elisabeth,4140,1615,80,30
+Percan; Merijam,4040,1915,80,30
+Schulz; Michael,3950,1495,80,30
+Tsiaras; Vassilis,440,945,80,30
+Triantafilou; Sofia,340,1045,80,30
+Boitmanis; Krists,2440,1765,80,30
+Rextin; Aimal,240,715,80,30
+Soezdinler; Melih,3840,2065,80,30
+Sakkalis; Vangelis,440,1145,80,30
+Tesar; Marek,820,1445,80,30
+Lidicky; Bernard,620,1495,80,30
+Jansen; Mathias,3220,1185,80,30
+Loeffier; Maarten,1640,2365,80,30
+Mohar; Bojan,2900,2635,80,30
+Lovasz; Gergoe,2520,1135,80,30
+Buchin; Kevin,1940,2665,80,30
+Buchin; Maike,1540,2615,80,30
+Byrka; Jaroslaw,1180,2195,80,30
+Silveira; Rodrigo I.,1440,2465,80,30
+Hu; Yifan,3240,1815,80,30
+Effinger; Philip,2540,3015,80,30
+Mader; Martin,1940,415,80,30
+Palazzi; Bernardo,340,1145,80,30
+Cibulka; Josef,640,1945,80,30
+Meszaros; Viola,540,1945,80,30
+Stolar; Rudolf,640,1845,80,30
+Korzhik; Vladimir P.,3040,2665,80,30
+Samee; Md. Abul Hassan,840,965,80,30
+Alam; Md. Jawaherul,940,965,80,30
+Adnan; Muhammad Abdullah,840,1165,80,30
+Pampel; Barbara,1920,1685,80,30
+van Hagen; Sjoerd,2140,2215,80,30
+Cittadini; Luca,2440,2265,80,30
+Refice; Tiziana,2020,2085,80,30
+Campisano; Alessio,2040,2265,80,30
+Sasso; Claudio,2220,1935,80,30
+Godiyal; Apeksha,1140,365,80,30
+Hoberock; Jared,1140,265,80,30
+Garland; Michael,1040,265,80,30
+Hart; John C.,1240,265,80,30
+Imamichi; Takashi,1940,345,80,30
+Arahori; Yohei,2040,345,80,30
+Gim; Jaeseong,1940,495,80,30
+Mchedlidze; Tamara,1720,2535,80,30
+Hofmeier; Andreas,2620,1285,80,30
+Matzeder; Marco,2420,1635,80,30
+Unfried; Thomas,2420,1135,80,30
+Argyriou; Evmorfia,2040,2815,80,30
+Palladino; Pietro,2420,2035,80,30
+Rohrschneider; Markus,3420,265,80,30
+Heine; Christian,3520,365,80,30
+Reichenbach; Andre,3420,365,80,30
+Kerren; Andreas,3320,465,80,30
+Scheuermann; Gerik,3520,265,80,30
+Dumitrescu; Adrian,240,1845,80,30
+Ruiz Velazquez; Lesvia Elena,1940,1415,80,30
+Zweig; Katharina,2120,2085,80,30
+Verbeek; Kevin,2520,2435,80,30
+Joubert; Jerome,4050,1295,80,30
+Lizeray; Stephane,4150,1445,80,30
+Raugi; Romain,4240,1265,80,30
+Decker; Gero,2540,3115,80,30
+Badent; Melanie,1820,1535,80,30
+Katz; Bastian,1440,2315,80,30
+Rutter; Ignaz,1440,2265,80,30
+Albrecht; Mario,3420,1135,80,30
+Kohlbacher; Oliver,2920,885,80,30
+Paul; Wolfgang,3120,1285,80,30
+Poon; Sheung-Hung,2040,865,80,30
+Spoenemann; Miro,3840,1765,80,30
+Fuhrmann; Hauke,3840,1865,80,30
+von Hanxleden; Reinhard,3620,1535,80,30
+Kriege; Nils,3520,1285,80,30
+Waldmann; Herbert,3120,1135,80,30
+Wetzel; Stefan,3640,915,80,30
+Williams; Rohan,2440,265,80,30
+Liu; Qing,2240,265,80,30
+Zhang; Ji,2240,365,80,30
+Wong; Hoi-Ming,3320,1085,80,30
+Albrecht; Benjamin,2540,2915,80,30
+Held; Markus,2440,2915,80,30
+Gretarsson; Brynjar,1040,65,80,30
+Bostandjiev; Svetlin,1340,65,80,30
+O'Donovan; John,1240,65,80,30
+Hoellerer; Tobias,1140,65,80,30
+# Edges
+Papamanthou; Charalampos,Tollis; Ioannis G.
+Papamanthou; Charalampos,Doerr; Martin
+Tollis; Ioannis G.,Doerr; Martin
+Dogrusoz; Ugur,Giral; Erhan
+Dogrusoz; Ugur,Cetintas; Ahmet
+Dogrusoz; Ugur,Civril; Ali
+Dogrusoz; Ugur,Demir; Emek
+Giral; Erhan,Cetintas; Ahmet
+Giral; Erhan,Civril; Ali
+Giral; Erhan,Demir; Emek
+Cetintas; Ahmet,Civril; Ali
+Cetintas; Ahmet,Demir; Emek
+Civril; Ali,Demir; Emek
+Genc; Burkay,Dogrusoz; Ugur
+Six; Janet M.,Tollis; Ioannis G.
+Hong; Seok-Hee,Eades; Peter
+Eiglsperger; Markus,Siebenhaller; Martin
+Eiglsperger; Markus,Kaufmann; Michael
+Siebenhaller; Martin,Kaufmann; Michael
+Gutwenger; Carsten,Mutzel; Petra
+Buchheim; Christoph,Juenger; Michael
+Kobourov; Stephen G.,Pitta; Chandan
+Koren; Yehuda,Harel; David
+Di Battista; Giuseppe,Mariani; Federico
+Di Battista; Giuseppe,Patrignani; Maurizio
+Di Battista; Giuseppe,Pizzonia; Maurizio
+Mariani; Federico,Patrignani; Maurizio
+Mariani; Federico,Pizzonia; Maurizio
+Patrignani; Maurizio,Pizzonia; Maurizio
+Bekos; Michael A.,Kaufmann; Michael
+Bekos; Michael A.,Symvonis; Antonios
+Bekos; Michael A.,Wolff; Alexander
+Kaufmann; Michael,Symvonis; Antonios
+Kaufmann; Michael,Wolff; Alexander
+Symvonis; Antonios,Wolff; Alexander
+Shahrokhi; Farhad,Sykora; Ondrej
+Shahrokhi; Farhad,Szekely; Laszlo A.
+Shahrokhi; Farhad,Vrt'o; Imrich
+Sykora; Ondrej,Szekely; Laszlo A.
+Sykora; Ondrej,Vrt'o; Imrich
+Szekely; Laszlo A.,Vrt'o; Imrich
+Healy; Patrick,Lynch; Karol
+Brandes; Ulrik,Cornelsen; Sabine
+Brandes; Ulrik,Wagner; Dorothea
+Cornelsen; Sabine,Wagner; Dorothea
+Cortese; Pier Francesco,Di Battista; Giuseppe
+Cortese; Pier Francesco,Patrignani; Maurizio
+Cortese; Pier Francesco,Pizzonia; Maurizio
+Di Giacomo; Emilio,Didimo; Walter
+Di Giacomo; Emilio,Liotta; Giuseppe
+Di Giacomo; Emilio,Meijer; Henk
+Didimo; Walter,Liotta; Giuseppe
+Didimo; Walter,Meijer; Henk
+Liotta; Giuseppe,Meijer; Henk
+Dickerson; Matthew,Eppstein; David
+Dickerson; Matthew,Goodrich; Michael T.
+Dickerson; Matthew,Meng; Jeremy Yu
+Eppstein; David,Goodrich; Michael T.
+Eppstein; David,Meng; Jeremy Yu
+Goodrich; Michael T.,Meng; Jeremy Yu
+de Fraysseix; Hubert,Ossona de Mendez; Patrice
+Nagamochi; Hiroshi,Kuroya; Katsutoshi
+Bonichon; Nicolas,Felsner; Stefan
+Bonichon; Nicolas,Mosbah; Mohamed
+Felsner; Stefan,Mosbah; Mohamed
+Finkel; Benjamin,Tamassia; Roberto
+Jourdan; Guy-Vincent,Rival; Ivan
+Jourdan; Guy-Vincent,Zaguia; Nejib
+Rival; Ivan,Zaguia; Nejib
+Gotsman; Craig,Koren; Yehuda
+Hachul; Stefan,Juenger; Michael
+Andersen; Reid,Chung; Fan
+Andersen; Reid,Lu; Lincoln
+Chung; Fan,Lu; Lincoln
+Baur; Michael,Brandes; Ulrik
+Baur; Michael,Gaertler; Marco
+Baur; Michael,Wagner; Dorothea
+Brandes; Ulrik,Gaertler; Marco
+Gaertler; Marco,Wagner; Dorothea
+Goerg; Carsten,Birke; Peter
+Goerg; Carsten,Pohl; Mathias
+Goerg; Carsten,Diehl; Stephan
+Birke; Peter,Pohl; Mathias
+Birke; Peter,Diehl; Stephan
+Pohl; Mathias,Diehl; Stephan
+Demetrescu; Camil,Finocchi; Irene
+Demetrescu; Camil,Italiano; Giuseppe F.
+Finocchi; Irene,Italiano; Giuseppe F.
+Suderman; Matthew,Whitesides; Sue
+Demaine; Erik D.,Hajiaghayi; MohammadTaghi
+Dujmovic; Vida,Fernau; Henning
+Dujmovic; Vida,Kaufmann; Michael
+Fernau; Henning,Kaufmann; Michael
+Efrat; Alon,Erten; Cesim
+Efrat; Alon,Kobourov; Stephen G.
+Erten; Cesim,Kobourov; Stephen G.
+Dyck; Breanne,Joevenazzo; Jill
+Dyck; Breanne,Nickle; Elspeth
+Dyck; Breanne,Wilsdon; Jon
+Dyck; Breanne,Wismath; Stephen
+Joevenazzo; Jill,Nickle; Elspeth
+Joevenazzo; Jill,Wilsdon; Jon
+Joevenazzo; Jill,Wismath; Stephen
+Nickle; Elspeth,Wilsdon; Jon
+Nickle; Elspeth,Wismath; Stephen
+Wilsdon; Jon,Wismath; Stephen
+Gutwenger; Carsten,Kupke; Joachim
+Gutwenger; Carsten,Klein; Karsten
+Gutwenger; Carsten,Leipert; Sebastian
+Kupke; Joachim,Klein; Karsten
+Kupke; Joachim,Leipert; Sebastian
+Klein; Karsten,Leipert; Sebastian
+Brandenburg; Franz J.,Brandes; Ulrik
+Brandenburg; Franz J.,Eades; Peter
+Brandenburg; Franz J.,Marks; Joe
+Brandes; Ulrik,Eades; Peter
+Brandes; Ulrik,Marks; Joe
+Eades; Peter,Marks; Joe
+Gansner; Emden R.,Koren; Yehuda
+Gansner; Emden R.,North; Stephen
+Koren; Yehuda,North; Stephen
+Brandenburg; Franz J.,Duncan; Christian A.
+Brandenburg; Franz J.,Gansner; Emden R.
+Brandenburg; Franz J.,Kobourov; Stephen G.
+Duncan; Christian A.,Gansner; Emden R.
+Duncan; Christian A.,Kobourov; Stephen G.
+Gansner; Emden R.,Kobourov; Stephen G.
+Erten; Cesim,Harding; Philipp J.
+Erten; Cesim,Wampler; Kevin
+Erten; Cesim,Yee; Gary V.
+Harding; Philipp J.,Kobourov; Stephen G.
+Harding; Philipp J.,Wampler; Kevin
+Harding; Philipp J.,Yee; Gary V.
+Kobourov; Stephen G.,Wampler; Kevin
+Kobourov; Stephen G.,Yee; Gary V.
+Wampler; Kevin,Yee; Gary V.
+Brandes; Ulrik,Pich; Christian
+Forrester; David,Kobourov; Stephen G.
+Forrester; David,Navabi; Armand
+Forrester; David,Wampler; Kevin
+Forrester; David,Yee; Gary V.
+Kobourov; Stephen G.,Navabi; Armand
+Navabi; Armand,Wampler; Kevin
+Navabi; Armand,Yee; Gary V.
+Bachmaier; Christian,Brandenburg; Franz J.
+Bachmaier; Christian,Forster; Michael
+Bachmaier; Christian,Holleis; Paul
+Bachmaier; Christian,Raitner; Marcus
+Brandenburg; Franz J.,Forster; Michael
+Brandenburg; Franz J.,Holleis; Paul
+Brandenburg; Franz J.,Raitner; Marcus
+Forster; Michael,Holleis; Paul
+Forster; Michael,Raitner; Marcus
+Holleis; Paul,Raitner; Marcus
+Di Giacomo; Emilio,Suderman; Matthew
+Didimo; Walter,Suderman; Matthew
+Liotta; Giuseppe,Suderman; Matthew
+Murray; Colin,Friedrich; Carsten
+Murray; Colin,Eades; Peter
+Friedrich; Carsten,Eades; Peter
+Aziza; Shabnam,Biedl; Therese
+Pach; Janos,Toth; Geza
+Balogh; Jozsef,Salazar; Gelasio
+Erten; Cesim,Pitta; Chandan
+Ebner; Dietmar,Klau; Gunnar W.
+Ebner; Dietmar,Weiskircher; Rene
+Klau; Gunnar W.,Weiskircher; Rene
+Torok; Lubomir,Vrt'o; Imrich
+Dujmovic; Vida,Wood; David R.
+Kyncl; Jan,Pach; Janos
+Kyncl; Jan,Toth; Geza
+Nakano; Shin-ichi,Uno; Takeaki
+Newton; Matthew,Sykora; Ondrej
+Newton; Matthew,Uzovic; Martin
+Newton; Matthew,Vrt'o; Imrich
+Sykora; Ondrej,Uzovic; Martin
+Uzovic; Martin,Vrt'o; Imrich
+Zhang; Huaming,He; Xin
+Rahman; Md. Saidur,Egi; Noritsugu
+Rahman; Md. Saidur,Nishizeki; Takao
+Egi; Noritsugu,Nishizeki; Takao
+Por; Attila,Wood; David R.
+Cerny; Jakub,Dvorak; Zdenek
+Cerny; Jakub,Jelinek; Vit
+Cerny; Jakub,Kara; Jan
+Dvorak; Zdenek,Jelinek; Vit
+Dvorak; Zdenek,Kara; Jan
+Jelinek; Vit,Kara; Jan
+Akkerman; Thorsten,Buchheim; Christoph
+Akkerman; Thorsten,Juenger; Michael
+Akkerman; Thorsten,Teske; Daniel
+Buchheim; Christoph,Teske; Daniel
+Juenger; Michael,Teske; Daniel
+Cabello; Sergio,Demaine; Erik D.
+Cabello; Sergio,Rote; Guenter
+Demaine; Erik D.,Rote; Guenter
+Dujmovic; Vida,Suderman; Matthew
+Suderman; Matthew,Wood; David R.
+Brandenburg; Franz J.,Eppstein; David
+Brandenburg; Franz J.,Goodrich; Michael T.
+Brandenburg; Franz J.,Liotta; Giuseppe
+Brandenburg; Franz J.,Mutzel; Petra
+Eppstein; David,Kobourov; Stephen G.
+Eppstein; David,Liotta; Giuseppe
+Eppstein; David,Mutzel; Petra
+Goodrich; Michael T.,Kobourov; Stephen G.
+Goodrich; Michael T.,Liotta; Giuseppe
+Goodrich; Michael T.,Mutzel; Petra
+Kobourov; Stephen G.,Liotta; Giuseppe
+Kobourov; Stephen G.,Mutzel; Petra
+Liotta; Giuseppe,Mutzel; Petra
+Erten; Cesim,Le; Vu
+Erten; Cesim,Navabi; Armand
+Kobourov; Stephen G.,Le; Vu
+Le; Vu,Navabi; Armand
+Boyer; John M.,Cortese; Pier Francesco
+Boyer; John M.,Patrignani; Maurizio
+Boyer; John M.,Di Battista; Giuseppe
+Hong; Seok-Hee,Merrick; Damian
+Hong; Seok-Hee,do Nascimento; Hugo A.D.
+Merrick; Damian,do Nascimento; Hugo A.D.
+Sugiyama; Kozo,Hong; Seok-Hee
+Sugiyama; Kozo,Maeda; Atsuhiko
+Hong; Seok-Hee,Maeda; Atsuhiko
+Kitching; Matthew,Whitesides; Sue
+Hui; Peter,Schaefer; Marcus
+Hui; Peter,Stefankovic; Daniel
+Schaefer; Marcus,Stefankovic; Daniel
+Kratochvil; Jan,Pergel; Martin
+Dean; Alice M.,Gethner; Ellen
+Dean; Alice M.,Hutchinson; Joan P.
+Gethner; Ellen,Hutchinson; Joan P.
+Baudel; Thomas,Haible; Bruno
+Baudel; Thomas,Sander; Georg
+Haible; Bruno,Sander; Georg
+Hong; Seok-Hee,Murtagh; Tom
+Sander; Georg,Vasiliu; Adrian
+Abello; James,Kobourov; Stephen G.
+Abello; James,Yusufov; Roman
+Kobourov; Stephen G.,Yusufov; Roman
+Brandes; Ulrik,Dwyer; Tim
+Brandes; Ulrik,Schreiber; Falk
+Dwyer; Tim,Schreiber; Falk
+Asano; Yasuhito,Nishizeki; Takao
+Noellenburg; Martin,Wolff; Alexander
+Dean; Alice M.,Evans; William
+Dean; Alice M.,Laison; Joshua D.
+Dean; Alice M.,Safari; Mohammad Ali
+Dean; Alice M.,Trotter; William T.
+Evans; William,Gethner; Ellen
+Evans; William,Laison; Joshua D.
+Evans; William,Safari; Mohammad Ali
+Evans; William,Trotter; William T.
+Gethner; Ellen,Laison; Joshua D.
+Gethner; Ellen,Safari; Mohammad Ali
+Gethner; Ellen,Trotter; William T.
+Laison; Joshua D.,Safari; Mohammad Ali
+Laison; Joshua D.,Trotter; William T.
+Safari; Mohammad Ali,Trotter; William T.
+Goodrich; Michael T.,Lueker; George S.
+Goodrich; Michael T.,Sun; Jonathan Z.
+Lueker; George S.,Sun; Jonathan Z.
+Miura; Kazuyuki,Azuma; Machiko
+Miura; Kazuyuki,Nishizeki; Takao
+Azuma; Machiko,Nishizeki; Takao
+Biedl; Therese,Brandenburg; Franz J.
+Biedl; Therese,Deng; Xiaotie
+Brandenburg; Franz J.,Deng; Xiaotie
+Bilgic; Mustafa,Licamele; Louis
+Bilgic; Mustafa,Getoor; Lise
+Bilgic; Mustafa,Shneidermann; Ben
+Licamele; Louis,Getoor; Lise
+Licamele; Louis,Shneidermann; Ben
+Getoor; Lise,Shneidermann; Ben
+Ho; Joshua,Hong; Seok-Hee
+Devillers; Olivier,Everett; Hazel
+Devillers; Olivier,Lazard; Sylvain
+Devillers; Olivier,Pentcheva; Maria
+Devillers; Olivier,Wismath; Stephen
+Everett; Hazel,Lazard; Sylvain
+Everett; Hazel,Pentcheva; Maria
+Everett; Hazel,Wismath; Stephen
+Lazard; Sylvain,Pentcheva; Maria
+Lazard; Sylvain,Wismath; Stephen
+Pentcheva; Maria,Wismath; Stephen
+Brandes; Ulrik,Fleischer; Daniel
+Brandes; Ulrik,Puppe; Thomas
+Fleischer; Daniel,Puppe; Thomas
+Buchheim; Christoph,Ebner; Dietmar
+Buchheim; Christoph,Klau; Gunnar W.
+Buchheim; Christoph,Mutzel; Petra
+Buchheim; Christoph,Weiskircher; Rene
+Ebner; Dietmar,Juenger; Michael
+Ebner; Dietmar,Mutzel; Petra
+Juenger; Michael,Klau; Gunnar W.
+Juenger; Michael,Mutzel; Petra
+Juenger; Michael,Weiskircher; Rene
+Klau; Gunnar W.,Mutzel; Petra
+Mutzel; Petra,Weiskircher; Rene
+Dwyer; Tim,Marriott; Kim
+Dwyer; Tim,Stuckey; Peter J.
+Marriott; Kim,Stuckey; Peter J.
+Xu; Kai,Hong; Seok-Hee
+Xu; Kai,Forster; Michael
+Xu; Kai,Nikolov; Nikola S.
+Xu; Kai,Ho; Joshua
+Xu; Kai,Koschutzki; Dirk
+Xu; Kai,Ahmed; Adel
+Xu; Kai,Dwyer; Tim
+Xu; Kai,Fu; Xiaoyan
+Xu; Kai,Murray; Colin
+Xu; Kai,Taib; Ronnie
+Xu; Kai,Tarassov; Alexandre
+Hong; Seok-Hee,Forster; Michael
+Hong; Seok-Hee,Nikolov; Nikola S.
+Hong; Seok-Hee,Koschutzki; Dirk
+Hong; Seok-Hee,Ahmed; Adel
+Hong; Seok-Hee,Dwyer; Tim
+Hong; Seok-Hee,Fu; Xiaoyan
+Hong; Seok-Hee,Murray; Colin
+Hong; Seok-Hee,Taib; Ronnie
+Hong; Seok-Hee,Tarassov; Alexandre
+Forster; Michael,Nikolov; Nikola S.
+Forster; Michael,Ho; Joshua
+Forster; Michael,Koschutzki; Dirk
+Forster; Michael,Ahmed; Adel
+Forster; Michael,Dwyer; Tim
+Forster; Michael,Fu; Xiaoyan
+Forster; Michael,Murray; Colin
+Forster; Michael,Taib; Ronnie
+Forster; Michael,Tarassov; Alexandre
+Nikolov; Nikola S.,Ho; Joshua
+Nikolov; Nikola S.,Koschutzki; Dirk
+Nikolov; Nikola S.,Ahmed; Adel
+Nikolov; Nikola S.,Dwyer; Tim
+Nikolov; Nikola S.,Fu; Xiaoyan
+Nikolov; Nikola S.,Murray; Colin
+Nikolov; Nikola S.,Taib; Ronnie
+Nikolov; Nikola S.,Tarassov; Alexandre
+Ho; Joshua,Koschutzki; Dirk
+Ho; Joshua,Ahmed; Adel
+Ho; Joshua,Dwyer; Tim
+Ho; Joshua,Fu; Xiaoyan
+Ho; Joshua,Murray; Colin
+Ho; Joshua,Taib; Ronnie
+Ho; Joshua,Tarassov; Alexandre
+Koschutzki; Dirk,Ahmed; Adel
+Koschutzki; Dirk,Dwyer; Tim
+Koschutzki; Dirk,Fu; Xiaoyan
+Koschutzki; Dirk,Murray; Colin
+Koschutzki; Dirk,Taib; Ronnie
+Koschutzki; Dirk,Tarassov; Alexandre
+Ahmed; Adel,Dwyer; Tim
+Ahmed; Adel,Fu; Xiaoyan
+Ahmed; Adel,Murray; Colin
+Ahmed; Adel,Taib; Ronnie
+Ahmed; Adel,Tarassov; Alexandre
+Dwyer; Tim,Fu; Xiaoyan
+Dwyer; Tim,Murray; Colin
+Dwyer; Tim,Taib; Ronnie
+Dwyer; Tim,Tarassov; Alexandre
+Fu; Xiaoyan,Murray; Colin
+Fu; Xiaoyan,Taib; Ronnie
+Fu; Xiaoyan,Tarassov; Alexandre
+Murray; Colin,Taib; Ronnie
+Murray; Colin,Tarassov; Alexandre
+Taib; Ronnie,Tarassov; Alexandre
+Di Giacomo; Emilio,Trotta; Francesco
+Liotta; Giuseppe,Trotta; Francesco
+Wybrow; Michael,Marriott; Kim
+Wybrow; Michael,Stuckey; Peter J.
+Huang; Weidong,Hong; Seok-Hee
+Huang; Weidong,Eades; Peter
+Biedl; Therese,Lubiw; Anna
+Biedl; Therese,Spriggs; Michael
+Lubiw; Anna,Spriggs; Michael
+Gutwenger; Carsten,Chimani; Markus
+Pelsmajer; Michael J.,Schaefer; Marcus
+Pelsmajer; Michael J.,Stefankovic; Daniel
+de Berg; Mark,Mumford; Elena
+de Berg; Mark,Speckmann; Bettina
+Mumford; Elena,Speckmann; Bettina
+Kyncl; Jan,Valtr; Pavel
+Civril; Ali,Magdon-Ismail; Malik
+Civril; Ali,Bocek-Rivele; Eli
+Magdon-Ismail; Malik,Bocek-Rivele; Eli
+Di Battista; Giuseppe,Frati; Fabrizio
+Dwyer; Tim,Koren; Yehuda
+Koren; Yehuda,Marriott; Kim
+de Fraysseix; Hubert,Rosenstiehl; Pierre
+Ossona de Mendez; Patrice,Rosenstiehl; Pierre
+Kaufmann; Michael,Vrt'o; Imrich
+Kaufmann; Michael,Geyer; Markus
+Vrt'o; Imrich,Geyer; Markus
+Didimo; Walter,Giordano; Francesco
+Giordano; Francesco,Liotta; Giuseppe
+Lee; Bongshin,Sims Parr; Cynthia
+Lee; Bongshin,Plaisant; Catherine
+Lee; Bongshin,Bederson; Benjamin B.
+Sims Parr; Cynthia,Plaisant; Catherine
+Sims Parr; Cynthia,Bederson; Benjamin B.
+Plaisant; Catherine,Bederson; Benjamin B.
+Di Giacomo; Emilio,Wismath; Stephen
+Liotta; Giuseppe,Wismath; Stephen
+Meijer; Henk,Wismath; Stephen
+Di Giacomo; Emilio,Grilli; Luca
+Didimo; Walter,Grilli; Luca
+Grilli; Luca,Liotta; Giuseppe
+Yildiz; Canan,Mutzel; Petra
+Yildiz; Canan,Barth; Wilhelm
+Mutzel; Petra,Barth; Wilhelm
+Brandes; Ulrik,Schlieper; Barbara
+Hirsch; Michael,Meijer; Henk
+Hirsch; Michael,Rappaport; David
+Meijer; Henk,Rappaport; David
+Estrella-Balderrama; Alejandro,Fowler; J. Joseph
+Estrella-Balderrama; Alejandro,Kobourov; Stephen G.
+Fowler; J. Joseph,Kobourov; Stephen G.
+Dillencourt; Michael B.,Eppstein; David
+Dillencourt; Michael B.,Goodrich; Michael T.
+Dangelmayr; Cornelia,Felsner; Stefan
+Keszegh; Balazs,Pach; Janos
+Keszegh; Balazs,Palvoelgyi; Doemoetoer
+Keszegh; Balazs,Toth; Geza
+Pach; Janos,Palvoelgyi; Doemoetoer
+Palvoelgyi; Doemoetoer,Toth; Geza
+Duncan; Christian A.,Klau; Gunnar W.
+Duncan; Christian A.,Sander; Georg
+Klau; Gunnar W.,Kobourov; Stephen G.
+Klau; Gunnar W.,Sander; Georg
+Kobourov; Stephen G.,Sander; Georg
+Purchase; Helen C.,Hoggan; Eve
+Purchase; Helen C.,Goerg; Carsten
+Hoggan; Eve,Goerg; Carsten
+Dwyer; Tim,Wybrow; Michael
+Benkert; Marc,Noellenburg; Martin
+Benkert; Marc,Uno; Takeaki
+Benkert; Marc,Wolff; Alexander
+Noellenburg; Martin,Uno; Takeaki
+Uno; Takeaki,Wolff; Alexander
+Kobourov; Stephen G.,Landis; Matthew
+Hlineny; Petr,Salazar; Gelasio
+Fox; Jacob,Toth; Csaba D.
+Miura; Kazuyuki,Matsuno; Tetsuya
+Matsuno; Tetsuya,Nishizeki; Takao
+Merrick; Damian,Gudmundsson; Joachim
+Wood; David R.,Telle; Jan Arne
+Klein; Karsten,Mutzel; Petra
+Buchsbaum; Adam L.,Gansner; Emden R.
+Buchsbaum; Adam L.,Procopiuc; Cecilia M.
+Buchsbaum; Adam L.,Venkatasubramanian; Suresh
+Gansner; Emden R.,Procopiuc; Cecilia M.
+Gansner; Emden R.,Venkatasubramanian; Suresh
+Procopiuc; Cecilia M.,Venkatasubramanian; Suresh
+Gudmundsson; Joachim,van Kreveld; Marc
+van Kreveld; Marc,Merrick; Damian
+Felsner; Stefan,Zickfeld; Florian
+Cappos; Justin,Estrella-Balderrama; Alejandro
+Cappos; Justin,Fowler; J. Joseph
+Cappos; Justin,Kobourov; Stephen G.
+Massow; Mareike,Felsner; Stefan
+Carlson; Josiah,Eppstein; David
+Lehmann; Katharina A.,Kottler; Stephan
+Wismath; Stephen,Didimo; Walter
+Wismath; Stephen,Trotta; Francesco
+Didimo; Walter,Trotta; Francesco
+Meijer; Henk,Trotta; Francesco
+Fox; Jacob,Pach; Janos
+Pach; Janos,Toth; Csaba D.
+Frati; Fabrizio,Patrignani; Maurizio
+Benkert; Marc,Haverkort; Herman
+Benkert; Marc,Kroll; Moritz
+Haverkort; Herman,Kroll; Moritz
+Haverkort; Herman,Noellenburg; Martin
+Kroll; Moritz,Noellenburg; Martin
+Angelini; Patrizio,Frati; Fabrizio
+Angelini; Patrizio,Grilli; Luca
+Frati; Fabrizio,Grilli; Luca
+Jelinkova; Eva,Kara; Jan
+Jelinkova; Eva,Kratochvil; Jan
+Jelinkova; Eva,Pergel; Martin
+Jelinkova; Eva,Suchy; Ondrej
+Jelinkova; Eva,Vyskocil; Tomas
+Kara; Jan,Kratochvil; Jan
+Kara; Jan,Pergel; Martin
+Kara; Jan,Suchy; Ondrej
+Kara; Jan,Vyskocil; Tomas
+Kratochvil; Jan,Suchy; Ondrej
+Kratochvil; Jan,Vyskocil; Tomas
+Pergel; Martin,Suchy; Ondrej
+Pergel; Martin,Vyskocil; Tomas
+Suchy; Ondrej,Vyskocil; Tomas
+Frati; Fabrizio,Kaufmann; Michael
+Frati; Fabrizio,Kobourov; Stephen G.
+Kaufmann; Michael,Kobourov; Stephen G.
+Atienza; Nieves,de Castro; Natalia
+Atienza; Nieves,Cortes; Carmen
+Atienza; Nieves,Garrido; M. Angeles
+Atienza; Nieves,Grima; Clara I.
+Atienza; Nieves,Hernandez; Gregorio
+Atienza; Nieves,Marquez; Alberto
+Atienza; Nieves,Moreno; Auxiliadora
+Atienza; Nieves,Noellenburg; Martin
+Atienza; Nieves,Portillo; Jose Ramon
+Atienza; Nieves,Reyes; Pedro
+Atienza; Nieves,Valenzuela; Jesus
+Atienza; Nieves,Villar; Maria Trinidad
+Atienza; Nieves,Wolff; Alexander
+de Castro; Natalia,Cortes; Carmen
+de Castro; Natalia,Garrido; M. Angeles
+de Castro; Natalia,Grima; Clara I.
+de Castro; Natalia,Hernandez; Gregorio
+de Castro; Natalia,Marquez; Alberto
+de Castro; Natalia,Moreno; Auxiliadora
+de Castro; Natalia,Noellenburg; Martin
+de Castro; Natalia,Portillo; Jose Ramon
+de Castro; Natalia,Reyes; Pedro
+de Castro; Natalia,Valenzuela; Jesus
+de Castro; Natalia,Villar; Maria Trinidad
+de Castro; Natalia,Wolff; Alexander
+Cortes; Carmen,Garrido; M. Angeles
+Cortes; Carmen,Grima; Clara I.
+Cortes; Carmen,Hernandez; Gregorio
+Cortes; Carmen,Marquez; Alberto
+Cortes; Carmen,Moreno; Auxiliadora
+Cortes; Carmen,Noellenburg; Martin
+Cortes; Carmen,Portillo; Jose Ramon
+Cortes; Carmen,Reyes; Pedro
+Cortes; Carmen,Valenzuela; Jesus
+Cortes; Carmen,Villar; Maria Trinidad
+Cortes; Carmen,Wolff; Alexander
+Garrido; M. Angeles,Grima; Clara I.
+Garrido; M. Angeles,Hernandez; Gregorio
+Garrido; M. Angeles,Marquez; Alberto
+Garrido; M. Angeles,Moreno; Auxiliadora
+Garrido; M. Angeles,Noellenburg; Martin
+Garrido; M. Angeles,Portillo; Jose Ramon
+Garrido; M. Angeles,Reyes; Pedro
+Garrido; M. Angeles,Valenzuela; Jesus
+Garrido; M. Angeles,Villar; Maria Trinidad
+Garrido; M. Angeles,Wolff; Alexander
+Grima; Clara I.,Hernandez; Gregorio
+Grima; Clara I.,Marquez; Alberto
+Grima; Clara I.,Moreno; Auxiliadora
+Grima; Clara I.,Noellenburg; Martin
+Grima; Clara I.,Portillo; Jose Ramon
+Grima; Clara I.,Reyes; Pedro
+Grima; Clara I.,Valenzuela; Jesus
+Grima; Clara I.,Villar; Maria Trinidad
+Grima; Clara I.,Wolff; Alexander
+Hernandez; Gregorio,Marquez; Alberto
+Hernandez; Gregorio,Moreno; Auxiliadora
+Hernandez; Gregorio,Noellenburg; Martin
+Hernandez; Gregorio,Portillo; Jose Ramon
+Hernandez; Gregorio,Reyes; Pedro
+Hernandez; Gregorio,Valenzuela; Jesus
+Hernandez; Gregorio,Villar; Maria Trinidad
+Hernandez; Gregorio,Wolff; Alexander
+Marquez; Alberto,Moreno; Auxiliadora
+Marquez; Alberto,Noellenburg; Martin
+Marquez; Alberto,Portillo; Jose Ramon
+Marquez; Alberto,Reyes; Pedro
+Marquez; Alberto,Valenzuela; Jesus
+Marquez; Alberto,Villar; Maria Trinidad
+Marquez; Alberto,Wolff; Alexander
+Moreno; Auxiliadora,Noellenburg; Martin
+Moreno; Auxiliadora,Portillo; Jose Ramon
+Moreno; Auxiliadora,Reyes; Pedro
+Moreno; Auxiliadora,Valenzuela; Jesus
+Moreno; Auxiliadora,Villar; Maria Trinidad
+Moreno; Auxiliadora,Wolff; Alexander
+Noellenburg; Martin,Portillo; Jose Ramon
+Noellenburg; Martin,Reyes; Pedro
+Noellenburg; Martin,Valenzuela; Jesus
+Noellenburg; Martin,Villar; Maria Trinidad
+Portillo; Jose Ramon,Reyes; Pedro
+Portillo; Jose Ramon,Valenzuela; Jesus
+Portillo; Jose Ramon,Villar; Maria Trinidad
+Portillo; Jose Ramon,Wolff; Alexander
+Reyes; Pedro,Valenzuela; Jesus
+Reyes; Pedro,Villar; Maria Trinidad
+Reyes; Pedro,Wolff; Alexander
+Valenzuela; Jesus,Villar; Maria Trinidad
+Valenzuela; Jesus,Wolff; Alexander
+Villar; Maria Trinidad,Wolff; Alexander
+Bachmaier; Christian,Brunner; Wolfgang
+Bachmaier; Christian,Koenig; Christof
+Brunner; Wolfgang,Koenig; Christof
+Nachmanson; Lev,Robertson; George
+Nachmanson; Lev,Lee; Bongshin
+Robertson; George,Lee; Bongshin
+Chimani; Markus,Mutzel; Petra
+Chimani; Markus,Schmidt; Jens M.
+Mutzel; Petra,Schmidt; Jens M.
+Cerny; Jakub,Kyncl; Jan
+Cerny; Jakub,Toth; Geza
+Bekos; Michael A.,Potika; Katerina
+Kaufmann; Michael,Potika; Katerina
+Potika; Katerina,Symvonis; Antonios
+Goerke; Robert,Gaertler; Marco
+Goerke; Robert,Wagner; Dorothea
+Di Giacomo; Emilio,van Kreveld; Marc
+Di Giacomo; Emilio,Speckmann; Bettina
+Didimo; Walter,van Kreveld; Marc
+Didimo; Walter,Speckmann; Bettina
+van Kreveld; Marc,Liotta; Giuseppe
+van Kreveld; Marc,Speckmann; Bettina
+Liotta; Giuseppe,Speckmann; Bettina
+Binucci; Carla,Didimo; Walter
+Binucci; Carla,Giordano; Francesco
+Krug; Marcus,Wagner; Dorothea
+Goaoc; Xavier,Kratochvil; Jan
+Goaoc; Xavier,Okamoto; Yoshio
+Goaoc; Xavier,Shin; Chan-Su
+Goaoc; Xavier,Wolff; Alexander
+Kratochvil; Jan,Okamoto; Yoshio
+Kratochvil; Jan,Shin; Chan-Su
+Kratochvil; Jan,Wolff; Alexander
+Okamoto; Yoshio,Shin; Chan-Su
+Okamoto; Yoshio,Wolff; Alexander
+Shin; Chan-Su,Wolff; Alexander
+Zhang; Huaming,Sadasivam; Sadish
+Harrigan; Martin,Healy; Patrick
+Estrella-Balderrama; Alejandro,Gassner; Elisabeth
+Estrella-Balderrama; Alejandro,Juenger; Michael
+Estrella-Balderrama; Alejandro,Percan; Merijam
+Estrella-Balderrama; Alejandro,Schaefer; Marcus
+Estrella-Balderrama; Alejandro,Schulz; Michael
+Gassner; Elisabeth,Juenger; Michael
+Gassner; Elisabeth,Percan; Merijam
+Gassner; Elisabeth,Schaefer; Marcus
+Gassner; Elisabeth,Schulz; Michael
+Juenger; Michael,Percan; Merijam
+Juenger; Michael,Schaefer; Marcus
+Juenger; Michael,Schulz; Michael
+Percan; Merijam,Schaefer; Marcus
+Percan; Merijam,Schulz; Michael
+Schaefer; Marcus,Schulz; Michael
+Tsiaras; Vassilis,Triantafilou; Sofia
+Tsiaras; Vassilis,Tollis; Ioannis G.
+Triantafilou; Sofia,Tollis; Ioannis G.
+Everett; Hazel,Liotta; Giuseppe
+Lazard; Sylvain,Liotta; Giuseppe
+Boitmanis; Krists,Brandes; Ulrik
+Boitmanis; Krists,Pich; Christian
+Rextin; Aimal,Healy; Patrick
+Erten; Cesim,Soezdinler; Melih
+Fowler; J. Joseph,Gutwenger; Carsten
+Fowler; J. Joseph,Juenger; Michael
+Fowler; J. Joseph,Mutzel; Petra
+Fowler; J. Joseph,Schulz; Michael
+Gutwenger; Carsten,Juenger; Michael
+Gutwenger; Carsten,Schulz; Michael
+Mutzel; Petra,Schulz; Michael
+Chimani; Markus,Hlineny; Petr
+Hlineny; Petr,Mutzel; Petra
+Tsiaras; Vassilis,Sakkalis; Vangelis
+Tollis; Ioannis G.,Sakkalis; Vangelis
+Jelinek; Vit,Suchy; Ondrej
+Jelinek; Vit,Tesar; Marek
+Jelinek; Vit,Vyskocil; Tomas
+Suchy; Ondrej,Tesar; Marek
+Tesar; Marek,Vyskocil; Tomas
+Jelinek; Vit,Jelinkova; Eva
+Jelinek; Vit,Kratochvil; Jan
+Jelinek; Vit,Lidicky; Bernard
+Jelinkova; Eva,Lidicky; Bernard
+Kratochvil; Jan,Lidicky; Bernard
+Chimani; Markus,Jansen; Mathias
+Chimani; Markus,Klein; Karsten
+Gutwenger; Carsten,Jansen; Mathias
+Jansen; Mathias,Klein; Karsten
+Jansen; Mathias,Mutzel; Petra
+Mumford; Elena,Loeffier; Maarten
+Cabello; Sergio,Mohar; Bojan
+Bachmaier; Christian,Lovasz; Gergoe
+Brandenburg; Franz J.,Brunner; Wolfgang
+Brandenburg; Franz J.,Lovasz; Gergoe
+Brunner; Wolfgang,Lovasz; Gergoe
+Buchin; Kevin,Buchin; Maike
+Buchin; Kevin,Byrka; Jaroslaw
+Buchin; Kevin,Noellenburg; Martin
+Buchin; Kevin,Okamoto; Yoshio
+Buchin; Kevin,Silveira; Rodrigo I.
+Buchin; Kevin,Wolff; Alexander
+Buchin; Maike,Byrka; Jaroslaw
+Buchin; Maike,Noellenburg; Martin
+Buchin; Maike,Okamoto; Yoshio
+Buchin; Maike,Silveira; Rodrigo I.
+Buchin; Maike,Wolff; Alexander
+Byrka; Jaroslaw,Noellenburg; Martin
+Byrka; Jaroslaw,Okamoto; Yoshio
+Byrka; Jaroslaw,Silveira; Rodrigo I.
+Byrka; Jaroslaw,Wolff; Alexander
+Noellenburg; Martin,Okamoto; Yoshio
+Noellenburg; Martin,Silveira; Rodrigo I.
+Okamoto; Yoshio,Silveira; Rodrigo I.
+Silveira; Rodrigo I.,Wolff; Alexander
+Gansner; Emden R.,Hu; Yifan
+Giordano; Francesco,Whitesides; Sue
+Liotta; Giuseppe,Whitesides; Sue
+Effinger; Philip,Kaufmann; Michael
+Effinger; Philip,Siebenhaller; Martin
+Hong; Seok-Hee,Mader; Martin
+Dogrusoz; Ugur,Duncan; Christian A.
+Dogrusoz; Ugur,Gutwenger; Carsten
+Dogrusoz; Ugur,Sander; Georg
+Duncan; Christian A.,Gutwenger; Carsten
+Gutwenger; Carsten,Sander; Georg
+Tamassia; Roberto,Palazzi; Bernardo
+Tamassia; Roberto,Papamanthou; Charalampos
+Palazzi; Bernardo,Papamanthou; Charalampos
+Cibulka; Josef,Kyncl; Jan
+Cibulka; Josef,Meszaros; Viola
+Cibulka; Josef,Stolar; Rudolf
+Cibulka; Josef,Valtr; Pavel
+Kyncl; Jan,Meszaros; Viola
+Kyncl; Jan,Stolar; Rudolf
+Meszaros; Viola,Stolar; Rudolf
+Meszaros; Viola,Valtr; Pavel
+Stolar; Rudolf,Valtr; Pavel
+Korzhik; Vladimir P.,Mohar; Bojan
+Samee; Md. Abul Hassan,Alam; Md. Jawaherul
+Samee; Md. Abul Hassan,Adnan; Muhammad Abdullah
+Samee; Md. Abul Hassan,Rahman; Md. Saidur
+Alam; Md. Jawaherul,Adnan; Muhammad Abdullah
+Alam; Md. Jawaherul,Rahman; Md. Saidur
+Adnan; Muhammad Abdullah,Rahman; Md. Saidur
+Brandes; Ulrik,Pampel; Barbara
+van Kreveld; Marc,van Hagen; Sjoerd
+Cittadini; Luca,Refice; Tiziana
+Cittadini; Luca,Campisano; Alessio
+Cittadini; Luca,Di Battista; Giuseppe
+Cittadini; Luca,Sasso; Claudio
+Refice; Tiziana,Campisano; Alessio
+Refice; Tiziana,Di Battista; Giuseppe
+Refice; Tiziana,Sasso; Claudio
+Campisano; Alessio,Di Battista; Giuseppe
+Campisano; Alessio,Sasso; Claudio
+Di Battista; Giuseppe,Sasso; Claudio
+Godiyal; Apeksha,Hoberock; Jared
+Godiyal; Apeksha,Garland; Michael
+Godiyal; Apeksha,Hart; John C.
+Hoberock; Jared,Garland; Michael
+Hoberock; Jared,Hart; John C.
+Garland; Michael,Hart; John C.
+Imamichi; Takashi,Arahori; Yohei
+Imamichi; Takashi,Gim; Jaeseong
+Imamichi; Takashi,Hong; Seok-Hee
+Imamichi; Takashi,Nagamochi; Hiroshi
+Arahori; Yohei,Gim; Jaeseong
+Arahori; Yohei,Hong; Seok-Hee
+Arahori; Yohei,Nagamochi; Hiroshi
+Gim; Jaeseong,Hong; Seok-Hee
+Gim; Jaeseong,Nagamochi; Hiroshi
+Hong; Seok-Hee,Nagamochi; Hiroshi
+Mchedlidze; Tamara,Symvonis; Antonios
+Kaufmann; Michael,van Kreveld; Marc
+Kaufmann; Michael,Speckmann; Bettina
+Koren; Yehuda,Civril; Ali
+Angelini; Patrizio,Cortese; Pier Francesco
+Angelini; Patrizio,Di Battista; Giuseppe
+Angelini; Patrizio,Patrignani; Maurizio
+Bachmaier; Christian,Hofmeier; Andreas
+Bachmaier; Christian,Matzeder; Marco
+Bachmaier; Christian,Unfried; Thomas
+Brandenburg; Franz J.,Hofmeier; Andreas
+Brandenburg; Franz J.,Matzeder; Marco
+Brandenburg; Franz J.,Unfried; Thomas
+Brunner; Wolfgang,Hofmeier; Andreas
+Brunner; Wolfgang,Matzeder; Marco
+Brunner; Wolfgang,Unfried; Thomas
+Hofmeier; Andreas,Matzeder; Marco
+Hofmeier; Andreas,Unfried; Thomas
+Matzeder; Marco,Unfried; Thomas
+Argyriou; Evmorfia,Bekos; Michael A.
+Argyriou; Evmorfia,Kaufmann; Michael
+Argyriou; Evmorfia,Symvonis; Antonios
+Di Giacomo; Emilio,Palladino; Pietro
+Didimo; Walter,Palladino; Pietro
+Liotta; Giuseppe,Palladino; Pietro
+Rohrschneider; Markus,Heine; Christian
+Rohrschneider; Markus,Reichenbach; Andre
+Rohrschneider; Markus,Kerren; Andreas
+Rohrschneider; Markus,Scheuermann; Gerik
+Heine; Christian,Reichenbach; Andre
+Heine; Christian,Kerren; Andreas
+Heine; Christian,Scheuermann; Gerik
+Reichenbach; Andre,Kerren; Andreas
+Reichenbach; Andre,Scheuermann; Gerik
+Kerren; Andreas,Scheuermann; Gerik
+Dumitrescu; Adrian,Pach; Janos
+Dumitrescu; Adrian,Toth; Geza
+Biedl; Therese,Ruiz Velazquez; Lesvia Elena
+Binucci; Carla,Brandes; Ulrik
+Binucci; Carla,Di Battista; Giuseppe
+Binucci; Carla,Palladino; Pietro
+Binucci; Carla,Patrignani; Maurizio
+Binucci; Carla,Symvonis; Antonios
+Binucci; Carla,Zweig; Katharina
+Brandes; Ulrik,Di Battista; Giuseppe
+Brandes; Ulrik,Didimo; Walter
+Brandes; Ulrik,Palladino; Pietro
+Brandes; Ulrik,Patrignani; Maurizio
+Brandes; Ulrik,Symvonis; Antonios
+Brandes; Ulrik,Zweig; Katharina
+Di Battista; Giuseppe,Didimo; Walter
+Di Battista; Giuseppe,Palladino; Pietro
+Di Battista; Giuseppe,Symvonis; Antonios
+Di Battista; Giuseppe,Zweig; Katharina
+Didimo; Walter,Patrignani; Maurizio
+Didimo; Walter,Symvonis; Antonios
+Didimo; Walter,Zweig; Katharina
+Palladino; Pietro,Patrignani; Maurizio
+Palladino; Pietro,Symvonis; Antonios
+Palladino; Pietro,Zweig; Katharina
+Patrignani; Maurizio,Symvonis; Antonios
+Patrignani; Maurizio,Zweig; Katharina
+Symvonis; Antonios,Zweig; Katharina
+Nachmanson; Lev,Dwyer; Tim
+Hu; Yifan,Kobourov; Stephen G.
+Cabello; Sergio,van Kreveld; Marc
+Cabello; Sergio,Liotta; Giuseppe
+Cabello; Sergio,Meijer; Henk
+Cabello; Sergio,Speckmann; Bettina
+Cabello; Sergio,Verbeek; Kevin
+van Kreveld; Marc,Meijer; Henk
+van Kreveld; Marc,Verbeek; Kevin
+Liotta; Giuseppe,Verbeek; Kevin
+Meijer; Henk,Speckmann; Bettina
+Meijer; Henk,Verbeek; Kevin
+Speckmann; Bettina,Verbeek; Kevin
+Duncan; Christian A.,Nachmanson; Lev
+Gutwenger; Carsten,Nachmanson; Lev
+Nachmanson; Lev,Sander; Georg
+Joubert; Jerome,Lizeray; Stephane
+Joubert; Jerome,Raugi; Romain
+Joubert; Jerome,Sander; Georg
+Lizeray; Stephane,Raugi; Romain
+Lizeray; Stephane,Sander; Georg
+Raugi; Romain,Sander; Georg
+Effinger; Philip,Decker; Gero
+Dwyer; Tim,Robertson; George
+Badent; Melanie,Baur; Michael
+Badent; Melanie,Brandes; Ulrik
+Badent; Melanie,Cornelsen; Sabine
+Baur; Michael,Cornelsen; Sabine
+Katz; Bastian,Krug; Marcus
+Katz; Bastian,Rutter; Ignaz
+Katz; Bastian,Wolff; Alexander
+Krug; Marcus,Rutter; Ignaz
+Krug; Marcus,Wolff; Alexander
+Rutter; Ignaz,Wolff; Alexander
+Albrecht; Mario,Kerren; Andreas
+Albrecht; Mario,Klein; Karsten
+Albrecht; Mario,Kohlbacher; Oliver
+Albrecht; Mario,Mutzel; Petra
+Albrecht; Mario,Paul; Wolfgang
+Albrecht; Mario,Schreiber; Falk
+Albrecht; Mario,Wybrow; Michael
+Kerren; Andreas,Klein; Karsten
+Kerren; Andreas,Kohlbacher; Oliver
+Kerren; Andreas,Mutzel; Petra
+Kerren; Andreas,Paul; Wolfgang
+Kerren; Andreas,Schreiber; Falk
+Kerren; Andreas,Wybrow; Michael
+Klein; Karsten,Kohlbacher; Oliver
+Klein; Karsten,Paul; Wolfgang
+Klein; Karsten,Schreiber; Falk
+Klein; Karsten,Wybrow; Michael
+Kohlbacher; Oliver,Mutzel; Petra
+Kohlbacher; Oliver,Paul; Wolfgang
+Kohlbacher; Oliver,Schreiber; Falk
+Kohlbacher; Oliver,Wybrow; Michael
+Mutzel; Petra,Paul; Wolfgang
+Mutzel; Petra,Schreiber; Falk
+Mutzel; Petra,Wybrow; Michael
+Paul; Wolfgang,Schreiber; Falk
+Paul; Wolfgang,Wybrow; Michael
+Schreiber; Falk,Wybrow; Michael
+Buchin; Kevin,van Kreveld; Marc
+Buchin; Kevin,Meijer; Henk
+Buchin; Kevin,Verbeek; Kevin
+Eades; Peter,Poon; Sheung-Hung
+Hong; Seok-Hee,Poon; Sheung-Hung
+Angelini; Patrizio,Cittadini; Luca
+Angelini; Patrizio,Didimo; Walter
+Angelini; Patrizio,Kaufmann; Michael
+Angelini; Patrizio,Symvonis; Antonios
+Cittadini; Luca,Didimo; Walter
+Cittadini; Luca,Frati; Fabrizio
+Cittadini; Luca,Kaufmann; Michael
+Cittadini; Luca,Symvonis; Antonios
+Di Battista; Giuseppe,Kaufmann; Michael
+Didimo; Walter,Frati; Fabrizio
+Didimo; Walter,Kaufmann; Michael
+Frati; Fabrizio,Symvonis; Antonios
+Duncan; Christian A.,Goodrich; Michael T.
+Spoenemann; Miro,Fuhrmann; Hauke
+Spoenemann; Miro,von Hanxleden; Reinhard
+Spoenemann; Miro,Mutzel; Petra
+Fuhrmann; Hauke,von Hanxleden; Reinhard
+Fuhrmann; Hauke,Mutzel; Petra
+von Hanxleden; Reinhard,Mutzel; Petra
+Kaufmann; Michael,Kottler; Stephan
+Klein; Karsten,Kriege; Nils
+Klein; Karsten,Waldmann; Herbert
+Klein; Karsten,Wetzel; Stefan
+Kriege; Nils,Mutzel; Petra
+Kriege; Nils,Waldmann; Herbert
+Kriege; Nils,Wetzel; Stefan
+Mutzel; Petra,Waldmann; Herbert
+Mutzel; Petra,Wetzel; Stefan
+Waldmann; Herbert,Wetzel; Stefan
+Xu; Kai,Williams; Rohan
+Xu; Kai,Liu; Qing
+Xu; Kai,Zhang; Ji
+Williams; Rohan,Hong; Seok-Hee
+Williams; Rohan,Liu; Qing
+Williams; Rohan,Zhang; Ji
+Hong; Seok-Hee,Liu; Qing
+Hong; Seok-Hee,Zhang; Ji
+Liu; Qing,Zhang; Ji
+Jelinkova; Eva,Tesar; Marek
+Kratochvil; Jan,Tesar; Marek
+Chimani; Markus,Wong; Hoi-Ming
+Gutwenger; Carsten,Wong; Hoi-Ming
+Mutzel; Petra,Wong; Hoi-Ming
+Albrecht; Benjamin,Effinger; Philip
+Albrecht; Benjamin,Held; Markus
+Albrecht; Benjamin,Kaufmann; Michael
+Albrecht; Benjamin,Kottler; Stephan
+Effinger; Philip,Held; Markus
+Effinger; Philip,Kottler; Stephan
+Held; Markus,Kaufmann; Michael
+Held; Markus,Kottler; Stephan
+Gretarsson; Brynjar,Bostandjiev; Svetlin
+Gretarsson; Brynjar,O'Donovan; John
+Gretarsson; Brynjar,Hoellerer; Tobias
+Bostandjiev; Svetlin,O'Donovan; John
+Bostandjiev; Svetlin,Hoellerer; Tobias
+O'Donovan; John,Hoellerer; Tobias
