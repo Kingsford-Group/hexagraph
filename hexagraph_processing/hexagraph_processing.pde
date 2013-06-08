@@ -8,7 +8,7 @@ String[] names;
 
 Vector paths;
 int n, gridx, gridy;
-int hexRadius = 20;
+int hexRadius = 30;
 float BLOCKED_OFFSET = 0.8;
 
 int[][] hexCenters;
@@ -322,7 +322,7 @@ void drawNodes(int[] assignment, int[][] hexCenters) {
   for (int i = 0; i < assignment.length; i++) {
     int cx = hexCenters[assignment[i]][0];
     int cy = hexCenters[assignment[i]][1];
-    drawHexSunken(cx, cy, hexRadius, names[i], blockedSides[assignment[i]]); //+ "," + str(assignment[i]));
+    drawHexSunken(cx, cy, hexRadius, names[i] + " " + str(i), blockedSides[assignment[i]]); //+ "," + str(assignment[i]));
     //drawHexSunken(cx, cy, hexRadius, str(assignment[i]), blockedSides[assignment[i]]);
   }
 }
@@ -390,7 +390,7 @@ void drawPaths(Vector paths, int[][] hexCenters) {
 }
 
 void setup() {
-  size(1000, 500);
+  size(2000, 2000);
   background(color(255, 255, 255));
   PFont f = createFont("Helvetica", 16, true);
   textFont(f, 12);

@@ -25,11 +25,9 @@
 \maketitle              % typeset the title of the contribution
 
 \begin{abstract}
-The abstract should summarize the contents of the paper
-using at least 70 and at most 150 words. It will be set in 9-point
-font size and be inset 1.0 cm from the right and left margins.
-There will be two blank lines before and after the Abstract. \dots
-\keywords{computational geometry, graph theory, Hamilton cycles}
+%
+We present a method for drawing graphs that assigns nodes with tiles in a hexagonal planar tiling. Adjacencies of the tiles are used to represent node adjacencies in order to reduce the number of explicit edges that must be drawn. We show how an alternative method of drawing the tiles can be used to relax the requirement that nodes assigned to touching tiles be adjacent in the input graph.  Our approach to finding a layout that attempts to minimize the number of explicit edges drawn and to maximize other aesthetic qualities is based on the combination of several heuristics, the most central of which is the repeated solution of a maximum weighted bipartite matching to find a good assignment of nodes to tiles. The technique is shown to produce compact, readable drawings for sparse graphs.
+%
 \end{abstract}
 
 %-----------------------------------------------------------------------
@@ -41,7 +39,9 @@ Given a graph $G = (V,E)$ and a tiling $\mathcal{T} = (C, F)$, find a function $
 %
 \end{problem}
 
-This paper is not a theoretical paper in the sense that we give no bounds or guarantees. Instead a number of algorithmic ideas are combined to produce a practical heuristic for laying out graphs using the tiling scheme described above.
+This paper is not a theoretical paper in the sense that we give any bounds or guarantees. Instead a number of algorithmic ideas are combined to produce a practical heuristic for laying out graphs using the tiling scheme described above.
+
+\subsection{Relaxing the requirement that adjacent tiles encode edges}
 
 %-----------------------------------------------------------------------
 \section{Layout Algorithms}
@@ -56,7 +56,7 @@ tiles}
 To find an assignment that satisfies as many edges as possible, we introduce an EM-like, randomized procedure that iteratively improves an initial assignment. This procedure, shown in Algorithm~\ref{alg:ilap}, computes the benefit of moving each node $u$ to each cell assuming that all other nodes are fixed in their current assignment. This results in a weighted, bipartite graph relating nodes to cells, and a maximum weight matching is found in this graph to choose a new assignment based on these weights. More detail of the various steps is given in the sections below.
 
 
-\begin{algorithm}
+\begin{algorithm}[t]
 \begin{algorithmic}[1]
 \State $\sigma_t \gets 1/200$
 \State $f'' \gets \Call{InitialAssignment}{G,T}$
@@ -153,16 +153,18 @@ every node to some cell.
 %    weight = 1000 * number of satisfied edges  + \sum_{neig} 500/celldist 
 %- with decreasing inertia we add an edge $(u,f(u))$ of weight 1000.
 
+\subsection{Local improvement by floating islands}
 
+To improve the layout and more easily incorporate global desiderata, we end the optimization with a phase of attempts at local improvement. We identify \emph{islands} of cells that are connected components of the graph after unsatisfied edges are removed. These islands are continuous regions of the plane that will be moved as a unit. To search for local improvements, each island $I$ is considered in turn, and every possible placement $I$ in the field of cells is attempted while keeping the other islands fixed in place. $I$ is left in the place that maximizes the quality $q$ of the resulting drawing, and the next island is considered. This process continues until every island is in its locally optimal location.
 
+For the experiments here, $q$ is taken to be the area of the drawing so that this local improvement step will tend to push islands together and create more compact drawings. Although rotation of the islands could be executed as well, we have not yet implemented it.
 
-\subsection{Relaxing the requirement that adjacent tiles encode edges}
 
 \subsection{Routing non-satisfied edges} 
 
 \begin{figure}
 \centering
-\includegraphics[width=0.5\textwidth]{hexagon_graph}
+\includegraphics[width=0.3\textwidth]{hexagon_graph}
 \caption{Subgraph created for routing edges for each tile.}
 \label{fig:routeg}
 \end{figure}
@@ -170,34 +172,43 @@ every node to some cell.
 We must draw a curve connecting $f(u)$ with $f(v)$ for any edge $\{u,v\}$ that $f$ does not map to adjacent cells. To do this, we create a graph $R$ by repeating the $K_6$ subgraph shown in Figure~\ref{fig:routeg} for every tile. The nodes of each $K_6$ are identified with the edges of the hexagon tile, and adjacent tiles share nodes. Edges in $R$ that are within tiles to which some vertex in $G$ has been assigned are given weight $10$, while those in unassigned tiles are given weight $1$. Although these weights are somewhat arbitrary, the $10$ is chosen sufficiently bigger than the circumference of a tile so that routing around a tile is preferred over routing through one.
 
 For every unsatisfied edge $\{u,v\}$, we find the shortest path in $R$ that 
-connects a vertex in cell $f(u)$ to a vertex in cell $f(v)$. The edge $\{u,v\}$ is then drawn by interpolating a curve along this shortest path.
+connects a vertex in cell $f(u)$ to a vertex in cell $f(v)$. The edge $\{u,v\}$ is then drawn by interpolating a curve along this shortest path. (We also experimented with a variant in which unsatisfied edges are routed in arbitrary order and once an edge of $R$ is used for a route, its weight is increased by a small amount; this tended to produce routes with complex and arbitrary curves, selected simply to avoid reusing an edge of $R$. Hence, in the layouts below, we allow arbitrary reuse of edges of $R$ without additional penalty.)
 
 \subsection{Coloring non-satisfied edges}
 
-The above procedure often draws a number of routes using the same edge of $R$. To visually distinguish such routes, we assign colors to routes so that if two routes share an edge of $R$ they are assigned different colors. To do this, we create a coloring graph $L = (V_L, E_L)$ where the vertices of  $L$ are the routes (corresponding to unsatisfied edges of $G$), and two routes are connected by an edge in $E_L$ if they use at least one of the same edges of $R$. We then use a simple greedy approximation~\cite{greedycoloring} to find the  coloring of $L$ that uses the fewest colors.
+The above procedure often draws a number of routes using the same edge of $R$. To visually distinguish such routes, we assign colors to routes so that if two routes share an edge of $R$ they are assigned different colors. To do this, we create a coloring graph $L = (V_L, E_L)$ where the vertices of  $L$ are the routes (corresponding to unsatisfied edges of $G$), and two routes are connected by an edge in $E_L$ if they use at least one of the same edges of $R$. We then use a simple greedy approximation~\cite{greedycoloring} to find the  coloring of $L$ that uses the fewest colors. Actual colors are selected by choosing colors in hue-lightness-saturation space with uniformly-spaced hues and near-constant (but slightly randomly perturbed) lightness and saturation.
+
 
 %-----------------------------------------------------------------------
 \section{Results}
+
+\subsection{Example tiled layouts}
+
+Figure~\ref{fig:tree} shows the layout of a 50-node, random tree with a powerlaw degree distribution (computed via~\cite{networkx}). Of course, this graph is planar, and nearly all edges are satisfied by tile adjacencies. The layout is compact and readable. The long chain of degree-2 nodes at the root of the tree (nodes 0 through 13) remains visible, and the high-degree nodes (26, 24, 25) are easily recognizable. The ability to recognize this immediately as a tree, however, is somewhat sacrificed.
+
+\begin{figure}[t]
+\centering
+\includegraphics[width=\textwidth]{tree50}
+\caption{A tree with 50 nodes.}\label{fig:tree}
+\end{figure}
+
+The hexagonal tiling layout can produce very readable and attractive drawings, as shown in Figure~\ref{fig:florentine}, which shows the relationship between Florentine families from a classic social network analysis~\cite{Flor}. Here a complex graph is drawn without edge crossings or node occlusion in a compact area.
+
+\begin{figure}[t]
+\centering
+\includegraphics[width=0.8\textwidth]{flor15}
+\caption{The Florentine families graph, from Ronald L. Breiger and Philippa E. Pattison Cumulated social roles: The duality of persons and their algebras,1 Social Networks, Volume 8, Issue 3, September 1986, Pages 215-256}\label{fig:florentine}
+\end{figure}
+
+\subsection{Quality metrics on several graphs}
+
+
 
 \subsection{Spectral approximation to the quadratic assignment problem}
 
 \subsection{Timing of the iterative linear assignment approach}
 
 \subsection{Quality of layout for near-planar graphs}
-
-\subsection{Example tiled layouts}
-
-\begin{figure}
-\centering
-\includegraphics[width=\textwidth]{tree50}
-\caption{A tree with 50 nodes.}
-\end{figure}
-
-\begin{figure}
-\centering
-\includegraphics[width=\textwidth]{flor15}
-\caption{The Florentine families graph, from Ronald L. Breiger and Philippa E. Pattison Cumulated social roles: The duality of persons and their algebras,1 Social Networks, Volume 8, Issue 3, September 1986, Pages 215-256}
-\end{figure}
 
 %-----------------------------------------------------------------------
 \section{Conclusion}
