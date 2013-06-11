@@ -322,7 +322,7 @@ void drawNodes(int[] assignment, int[][] hexCenters) {
   for (int i = 0; i < assignment.length; i++) {
     int cx = hexCenters[assignment[i]][0];
     int cy = hexCenters[assignment[i]][1];
-    drawHexSunken(cx, cy, hexRadius, names[i] + " " + str(i), blockedSides[assignment[i]]); //+ "," + str(assignment[i]));
+    drawHexSunken(cx, cy, hexRadius, names[i], blockedSides[assignment[i]]); //+ "," + str(assignment[i]));
     //drawHexSunken(cx, cy, hexRadius, str(assignment[i]), blockedSides[assignment[i]]);
   }
 }

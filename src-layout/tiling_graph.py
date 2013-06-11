@@ -42,6 +42,7 @@ import math
 import sys
 import colorsys
 import random
+import time
 
 #==========================================================================
 # Represents a tiling object
@@ -164,15 +165,16 @@ class HexTiling(object):
         return "s_%d_%s" % (c, s)
 
     def grid_coords(self, c):
-        y = c // self.y
-        x = c % self.y
+        y = c // self.x
+        x = c % self.x
+        assert 0 <= x < self.x
+        assert 0 <= y < self.y
         return (x,y)
 
     def coords_grid(self, x, y):
         assert 0 <= x < self.x
         assert 0 <= y < self.y
         c = y * self.x + x
-        print "c=", c
         assert 0 <= c < self.num_cells()
         return c
 
@@ -340,8 +342,8 @@ def find_assignment_ilap(G, T, CUTOFF=0):
         prev_weight = w
         inertia += 0.5
     
-    n2c, c2n = shift_layout(G, T, n2c)
     n2c, c2n = float_islands(G, T, n2c, c2n)
+    n2c, c2n = shift_layout(G, T, n2c)
     Blocked = find_blocked_sides(G, T, n2c,c2n)
     return n2c, c2n, Blocked
 
@@ -380,6 +382,7 @@ def compute_islands(G, T, n2c, c2n):
         Considered.add(root)
         I = [root, (u,0,0)]
         rx,ry = T.grid_coords(root)
+        print "Making I:", u, rx, ry
         queue = [root]
         while len(queue):
             c = queue[-1]
@@ -390,6 +393,7 @@ def compute_islands(G, T, n2c, c2n):
                 if d in c2n and G.has_edge(c2n[c], c2n[d]):
                     dx,dy = T.grid_coords(d)
                     I.append( (c2n[d], dx-rx, dy-ry) )
+                    print "Adding", c2n[d], d, dx,dy, dx-rx, dy-ry
                     queue.append(d)
                     Considered.add(d)
         Islands.append(I)
@@ -397,8 +401,18 @@ def compute_islands(G, T, n2c, c2n):
     print "Islands="
     for I in Islands:
         print '\t', I
+
+    # make sure every node is in an island
     Nodes = set(u for I in Islands for u,x,y in I[1:]) 
     assert len(Nodes) == len(G)
+
+    # make sure every island is in the field
+    for I in Islands:
+        rx,ry = T.grid_coords(I[0])
+        for u,x,y in I[1:]:
+            assert 0 <= rx+x < T.x
+            assert 0 <= ry+y < T.y
+
     return Islands
 
         
@@ -412,7 +426,7 @@ def area(T, n2c):
         maxy = max(maxy, y) if maxy is not None else x
 
     # return the negative of the area
-    return (maxx - minx) * (maxy - miny)
+    return (maxx - minx) * (maxy - miny), maxx-minx, maxy-miny
 
 def edge_stretch(G, T, n2c, EndPoints=None):
     euk = 0.0
@@ -440,7 +454,8 @@ def island_quality(I, cx,cy, G, T, n2c):
         if newcell > T.num_cells(): return -40000000
         n2c2[u] = newcell
 
-    return - area(T, n2c2)
+    a,x,y = area(T, n2c2)
+    return -a
 
     Island = set(u for u,c in I[1:])
     euk = edge_stretch(G, T, n2c2, Island)
@@ -458,21 +473,26 @@ def float_islands(G, T, n2c, c2n):
         for I in Islands:
             # find the best place for the island
             best_quality = None
+ #           x,y = T.grid_coords(I[0])
+ #           q = island_quality(I, x,y, G, T, n2c) 
+ #           best_quality = q
+ #           best_loc = (x,y)
             for x in xrange(T.x):
                 for y in xrange(T.y):
                     q = island_quality(I, x,y, G, T, n2c) 
                     if q > best_quality or best_quality is None:
                         best_quality = q
                         best_loc = (x,y)
-                print "Island::", I[1][0], I[0], best_loc, best_quality
+            #print "Island::", I[1][0], I[0], q, best_loc, best_quality
 
             # move the island to the best place
             for u,x,y in I[1:]:
+                #print 'move', u, x, y, best_loc[0]+x, best_loc[1]+y
                 n2c[u] = T.coords_grid(best_loc[0]+x,best_loc[1]+y)
 
             if best_loc != I[0]: 
                 moved = True
-                print "I=%d old=%s new=%s q=%f" % (I[1][0], str(I[0]), str(best_loc), best_quality)
+                #print "I=%d old=%s new=%s q=%f" % (I[1][0], str(I[0]), str(best_loc), best_quality)
             I[0] = best_loc
         i += 1
 
@@ -872,6 +892,10 @@ def route_remaining_edges(G, T, n2c, c2n):
     H = construct_routing_graph(T, c2n) ## clk: this one works
     nx.write_edgelist(H, "hex.graph")
 
+    global StatsCrossing
+    global StatsNonCrossing
+    StatsCrossing = StatsNonCrossing = 0
+
     Routes = []
     for u, v in G.edges_iter():
         c = n2c[u]
@@ -895,6 +919,13 @@ def route_remaining_edges(G, T, n2c, c2n):
             print "Bad Path!", P, c, d, source, target
             print best_source, best_target, best
             print best_source in H, best_target in H
+
+        for i in xrange(len(P)-1):
+            u,v = P[i], P[i+1]
+            if H.edge[u][v]['weight'] >= 10:
+                StatsCrossing += 1
+            else:
+                StatsNonCrossing += 1
 
         assert all(H.has_edge(P[i], P[i+1]) for i in xrange(len(P)-1))
         #for i in xrange(len(P)-1):
@@ -1045,6 +1076,8 @@ def write_hex_layout(filename, G, T, node2cell, P, RouteColors, BlockedSides):
 
 
 def hex_layout(G, x, y, filename):
+
+    start = time.clock()
     # construct a tiling
     n = G.number_of_nodes()
     m = G.number_of_edges()
@@ -1071,7 +1104,6 @@ def hex_layout(G, x, y, filename):
 
     print >> sys.stderr, "Routing remaining edges..."
     P = route_remaining_edges(G, T, node2cell, cell2node)
-    print "P=", P
 
     # choose colors for the edges
     RouteColors = color_routes(P)
@@ -1079,22 +1111,26 @@ def hex_layout(G, x, y, filename):
     # write out the solution
     print >> sys.stderr, "Saving..."
     write_hex_layout(filename, G, T, node2cell, P, RouteColors, blockedSides)
+    global StatsTime
+    StatsTime = time.clock() - start
+    print_layout_statistics(G, T, node2cell)
 
 #==========================================================================
 # Main Program
 #==========================================================================
 
-
-def print_layout_statistics(G, T, n2c, c2n):
-    print "Nodes:", G.number_of_nodes()
-    print "Edges:", StatsNumberEdges
-    print "Satisfied:", StatSatisfied
-    print "Iterations:", StatsIterations
-    print "ColorsRequired:", StatColorsRequired
-    print "MaximumRouteDeg:", StatsMaxEdgeDeg
-    print "Area:", area(T, n2c)
-    #print "Crossings:",
-    print "TotalEdgeLen:", edgeLen(G, T, n2c)
+def print_layout_statistics(G, T, n2c):
+    print "S Nodes:", G.number_of_nodes()
+    print "S Edges:", StatsNumberEdges
+    print "S Satisfied:", StatSatisfied
+    print "S Iterations:", StatsIterations
+    print "S ColorsRequired:", StatColorsRequired
+    print "S MaximumRouteDeg:", StatsMaxEdgeDeg
+    print "S Area:", area(T, n2c)
+    print "S TotalEucEdgeLen:", edge_stretch(G, T, n2c)
+    print "S TotalCrossing:", StatsCrossing
+    print "S TotalNonCrossing:", StatsNonCrossing
+    print "S Time:", StatsTime
 
 def number_nodes(G):
     H = nx.Graph()
@@ -1117,7 +1153,8 @@ def main():
     #G = number_nodes(nx.read_gml(sys.argv[2]))
     #G = number_nodes(nx.florentine_families_graph())
     #G = number_nodes(nx.read_adjlist(sys.argv[2]))
-    G = number_nodes(nx.read_edgelist(sys.argv[2]))
+    print "S", name, sys.argv[2]
+    G = number_nodes(nx.read_gml(sys.argv[2]))
     nx.write_edgelist(G, name + "-in.graph")
     hex_layout(G, 15, 20, name + ".layout")
 
