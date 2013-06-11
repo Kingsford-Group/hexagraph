@@ -1144,7 +1144,7 @@ def print_layout_statistics(G, T, n2c):
     print "S ColorsRequired:", StatColorsRequired
     print "S MaximumRouteDeg:", StatsMaxEdgeDeg
     print "S IslandPasses:", StatsIslandPasses
-    print "S Area:", ' '.join(area(T, n2c))
+    print "S Area:", ' '.join(str(x) for x in area(T, n2c))
     print "S TotalEucEdgeLen:", edge_stretch(G, T, n2c)
     print "S TotalCrossing:", StatsCrossing
     print "S TotalNonCrossing:", StatsNonCrossing
