@@ -4,10 +4,11 @@
 \usepackage{algorithm}
 \usepackage[noend]{algpseudocode}
 \usepackage{graphicx}
+\usepackage{booktabs}
 %
 \begin{document}
 %
-\title{Drawing of near-planar graphs via hexagonal tilings}
+\title{Drawing of sparse graphs via hexagonal tilings}
 %
 \titlerunning{Drawing via hexagonal tilings}  % abbreviated title (for running head)
 %                                     also used for the TOC unless
@@ -43,10 +44,14 @@ This paper is not a theoretical paper in the sense that we give any bounds or gu
 
 \subsection{Relaxing the requirement that adjacent tiles encode edges}
 
-%-----------------------------------------------------------------------
-\section{Layout Algorithms}
+\begin{figure}[t]
+\centering
+\includegraphics[width=0.7\textwidth]{flor15}
+\caption{The Florentine families graph ($n=15$, $m=20$), from }\label{fig:florentine}
+\end{figure}
 
-\subsection{Tile assignment as a quadratic program}
+%-----------------------------------------------------------------------
+\section{Layout Approach}
 
 \subsection{Iterative, randomized linear assignment for assigning nodes to
 tiles}
@@ -146,9 +151,6 @@ every node to some cell.
 % IDEA: only compute costs against inertia nodes.
 
 
-
-
-
 %- (u,c) if either c is not blocked or c is attractive 
 %    weight = 1000 * number of satisfied edges  + \sum_{neig} 500/celldist 
 %- with decreasing inertia we add an edge $(u,f(u))$ of weight 1000.
@@ -174,6 +176,7 @@ We must draw a curve connecting $f(u)$ with $f(v)$ for any edge $\{u,v\}$ that $
 For every unsatisfied edge $\{u,v\}$, we find the shortest path in $R$ that 
 connects a vertex in cell $f(u)$ to a vertex in cell $f(v)$. The edge $\{u,v\}$ is then drawn by interpolating a curve along this shortest path. (We also experimented with a variant in which unsatisfied edges are routed in arbitrary order and once an edge of $R$ is used for a route, its weight is increased by a small amount; this tended to produce routes with complex and arbitrary curves, selected simply to avoid reusing an edge of $R$. Hence, in the layouts below, we allow arbitrary reuse of edges of $R$ without additional penalty.)
 
+
 \subsection{Coloring non-satisfied edges}
 
 The above procedure often draws a number of routes using the same edge of $R$. To visually distinguish such routes, we assign colors to routes so that if two routes share an edge of $R$ they are assigned different colors. To do this, we create a coloring graph $L = (V_L, E_L)$ where the vertices of  $L$ are the routes (corresponding to unsatisfied edges of $G$), and two routes are connected by an edge in $E_L$ if they use at least one of the same edges of $R$. We then use a simple greedy approximation~\cite{greedycoloring} to find the  coloring of $L$ that uses the fewest colors. Actual colors are selected by choosing colors in hue-lightness-saturation space with uniformly-spaced hues and near-constant (but slightly randomly perturbed) lightness and saturation.
@@ -188,51 +191,126 @@ Figure~\ref{fig:tree} shows the layout of a 50-node, random tree with a powerlaw
 
 \begin{figure}[t]
 \centering
-\includegraphics[width=\textwidth]{tree50}
+\includegraphics[width=0.9\textwidth]{tree50}
 \caption{A tree with 50 nodes.}\label{fig:tree}
 \end{figure}
 
 The hexagonal tiling layout can produce very readable and attractive drawings, as shown in Figure~\ref{fig:florentine}, which shows the relationship between Florentine families from a classic social network analysis~\cite{Flor}. Here a complex graph is drawn without edge crossings or node occlusion in a compact area.
 
-\begin{figure}[t]
-\centering
-\includegraphics[width=0.8\textwidth]{flor15}
-\caption{The Florentine families graph ($n=XXX$, $m=XXX$), from Ronald L. Breiger and Philippa E. Pattison Cumulated social roles: The duality of persons and their algebras,1 Social Networks, Volume 8, Issue 3, September 1986, Pages 215-256}\label{fig:florentine}
-\end{figure}
 
-\begin{figure}[t]
+
+The number of times edges cross nodes is also typically much smaller for hexagonal tiling layouts. Compare, for example, Figure~\ref{fig:circuit} with Figure~\ref{fig:circuit-neato}, which both show a circuit graph representing the Apple II video controller from the 2010 Graph Drawing Contest~\cite{gdcontest}. While the hexagonal tiling cannot avoid node-edge crossings entirely, the layout produced by the force-directed approach of graphviz (neato)~\cite{graphviz} includes far more such crossings. High-degree nodes (such as \texttt{A5} and \texttt{A8}) are also more apparent in Figure~\ref{fig:circuit} since they are drawn as flowers with a number of petals.
+
+Figures~\ref{fig:call} and~\ref{fig:angular} provide two more examples of successful layouts produced by the hexagraph tiling approach. Figure~\ref{fig:call} is a layout of the call graph for functions called by the program that produced the tiling layout itself (only those functions that represented more than 10\% of the execution of the program). Figure~\ref{fig:angular} is the ``\texttt{angular}'' graph from the 2011 graph drawing contest~\cite{gdcontest}. Note, for example, the excellent packing of nodes $0-6$, $8-11$, and $13$.
+
+
+\begin{figure}[p]
 \centering
-\includegraphics[width=0.9\textwidth]{circuit7}
-\caption{Circuit graph ($n=XXX$, $m=XXX$) from the 20XXX graph drawing contest.}
+\includegraphics[width=0.8\textwidth]{circuit7}
+\caption{Circuit graph ($n=48$, $m=73$) from the 2010 Graph Drawing contest.}
 \label{fig:circuit}
 \end{figure}
 
-\begin{figure}
+\begin{figure}[p]
 \centering
-\includegraphics[width=0.5\textwidth]{circuit7-neato}
-\caption{Circuit graph of Figure~\ref{fig:circuit} drawn using neato~\cite{neato}.}
+\includegraphics[width=0.25\textwidth]{circuit7-neato}
+\caption{Circuit graph of Figure~\ref{fig:circuit} drawn using neato~\cite{graphviz}.}\label{fig:circuit-neato}
+\end{figure}
+
+\begin{figure}[p]
+\centering
+\includegraphics[width=\textwidth]{call3}
+\caption{Graph of function calls for the program which computes the hexagon tiling layout ($n=52$, $m=54$).}\label{fig:call}
+\end{figure}
+
+\begin{figure}[p]
+\centering
+\includegraphics[width=\textwidth]{angularA2}
+\caption{The \texttt{angularA} graph ($n=48$, $m=102$) from the 2011 Graph Drawing Contest~\cite{gdcontest}. The graph is planar.}\label{fig:angular}
 \end{figure}
 
 \subsection{Quality metrics on several graphs}
 
+Table~\ref{tbl:qual} shows the ability of the approach described above to produce good layouts under several metrics. The most important metric, the one for which we are most directly optimizing, is satisfying as many edges as possible via tile adjacencies. In these tests, about XXX\% of the edges can be represented by tile adjacencies, which represents a significant reduction in the number of edges that must be drawn using curves. 
+
+The number of edge colors needed is often less ideal because it means that XXX--XXX edges are routed through the same path. This introduces edge-edge occlusion that --- even despite the different colors --- can make edges more difficult to track. However, the use of alternative edge glyphs or edge offsets to reduce confusion created when two edge routes use the same edge of $R$ could be considered to mitigate this problem.
+
+The minimum area required to display the graph is $n$ tiles. On average, the layout is very compact, requiring an area of $XXXn$ tiles to display the nodes (the actual area may be slightly larger to accommodate edge routes around the circumference). This is evidence that the hexagon tiling approach allows very compact drawings to be created, as expected.
+
+Another advantage of this approach is that few node-edge crossings are introduced. On average, only XXX node-edge crossings are present in the drawings. These occur when either a node is  blocked on all sides by adjacent nodes, or when the endpoints of the edge are close but a non-node-crossing route would need to nearly circumnavigate the layout to reach an unblocked entry port of the node.
 
 
-%\subsection{Spectral approximation to the quadratic assignment problem}
+\begin{table}[t]
+\caption{Quality of computed layouts on several graphs, averaged over $10$ randomized runs. The number of nodes $n$ and number of edges $m$ are given. \textbf{\# Satisfied} gives the edges that were satisfied by tile adjacencies. \textbf{\# Colors} shows the number of colors required to color the routes. \textbf{Area} gives the of the drawn in terms of number of tiles. \textbf{Node-Edge Crossings} are the number of times a non-satisfied edge crosses the face of some node. \textbf{Route Lengths} gives the total length of the routing of the unsatisfied edges (as the number of edges of $R$ that they use).}\label{tbl:qual}
+\centering
+\begin{tabular}{lrrrrrrr}
+\toprule
+Graph                & $n$ & $m$ 
+& \parbox{1.5cm}{\centering \# Edges\par Satisfied} 
+& \parbox{1.5cm}{\centering\# Colors\par Needed} 
+& Area 
+& \parbox{1.8cm}{\centering Node-Edge\par Crossings} 
+& \parbox{1.5cm}{\centering Route Lengths} \\
+\midrule
+\texttt{circuit} 	& $48$ & $73$   & $49.6$ & $6.9$ & $63$   & $15.2$ & $182$ \\
+\texttt{call} 		& $52$ & $54$   & $40.7$ & $5.2$ & $72.3$ & $7.7$  & $110.7$\\
+\texttt{Florentine} 	& $15$ & $20$   & \\
+\texttt{tree} 		& $50$ & $49$   & \\
+\texttt{dolphin} 	& $62$ & $159$  & \\ 
+\texttt{flowchart} 	& $57$ & $72$   & \\
+\texttt{karate} 		& $34$ & $78$   & \\
+\texttt{chrom10} 	& $141$ & $483$ & \\
+\bottomrule
+\end{tabular}
+\end{table}
 
 \subsection{Timing of the iterative linear assignment approach}
 
+Table~\ref{tbl:time} gives running time information for the graphs of Table~\ref{tbl:qual}. The running times are fairly practical: most graphs $\approx 50$ nodes require around $5$ minutes of total computation time to produce a good layout. This requires the solution of between XXX and XXX maximum bipartite matching instances before the solution converges to a stable assignment. In addition, a local optimal is found typically after   only a very few passes through the islands. These timings are evidence that the approach described above can be practical. However, the current code has not be optimized for speed: it is written in Python (using igraph~\cite{igraph} to compute the maximum bipartite matching). Additional engineering could likely significantly improve the speed at which layouts can be produced.
+
+\begin{table}[t]
+\caption{Number of iterations of the linear assignment procedure (LAP) and the
+greedy floating island improvements (Island), and the number of seconds for the entire layout to be computed on a 3.4~GHz iMac in Python. Numbers are averaged over $10$ randomized runs.}\label{tbl:time}
+\centering
+\begin{tabular}{lrr@{$\;\;$}rrr}
+\toprule
+                     & \multicolumn{2}{c}{Size} & \multicolumn{2}{c}{Iterations} & \\
+\cmidrule{2-3}\cmidrule(l){4-5}
+Graph 				& \parbox{0.7cm}{\centering $n$}  & \parbox{0.7cm}{\centering $m$} & LAP  & Island  & Seconds \\
+\midrule
+\texttt{circuit} 	& $48$ & $73$   & $136.9$ & $2.4$ & $256.82$ \\
+\texttt{call} 		& $52$ & $54$   & $122.3$ & $2.9$ & $252.61$ \\
+\texttt{Florentine} 	& $15$ & $20$   & \\
+\texttt{tree} 		& $50$ & $49$   & \\
+\texttt{dolphin} 	& $62$ & $159$  & \\ 
+\texttt{flowchart} 	& $57$ & $72$   & \\
+\texttt{karate} 		& $34$ & $78$   & \\
+\texttt{chrom10} 	& $141$ & $483$ & \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+%\subsection{Spectral approximation to the quadratic assignment problem}
 
 %-----------------------------------------------------------------------
 \section{Conclusion}
 
-The use of tile adjacencies to represent edges has several advantages. The 
+The use of hexagonal tile adjacencies to represent edges has several advantages. The 
 first is that it reduces clutter by reducing the number of edges that must 
-be drawn. Secondly, 
+be drawn. The choice of hexagonal tiles allows non-adjacent nodes to be assigned to adjacent tiles without introducing false edges. In addition, common motifs such as cliques, bicliques, and stars show up directly in the layout. Nodes with high clustering coefficient can also be seen as they will tend to have adjacent tiles that are also adjacent.  Finally, we have shown that the grid structure allows an efficient iterative, EM-like 
+procedure to find a compact layout with few node-edge crossings.
 
+There are many ways in which the ``hexagraph'' layout presented here could be further improved. The first is to allow non-satisfied edges to be routed through the channels introduced when two non-adjacent nodes are placed in adjacent tiles. This can be accomplished by creating a more complex routing graph $R$ that includes edges for these channels. This will reduce the number of node-edge crossings even further. 
+
+Algorithmic improvements should also be explored to find more optimal assignments of nodes to tiles. Currently, edge routing and node assignment are considered almost independently: nodes are placed to satisfy edges and to minimize the Euclidean distance between endpoints of unsatisfied nodes, but the Euclidean distance can be poor approximation to the distance an edge would have to be routed around nodes. The length of routes could be incorporated into the assignment costs in the maximum bipartite matching at the expense of recomputing routes after each matching iteration.
+ 
+We have shown that high-quality, readable, compact layouts that exploit node adjacency to display the existence of edges can be computed efficiently using a randomized, iterative linear assignment procedure, coupled with a local greedy improvement phase. These algorithms produce drawings are often produce very readable and are particularly suited for sparse graphs. We hope that this general layout scheme will find uses in several application domains.
 
 \section*{Acknowledgements}
 
 This work has been partially funded by National Science Foundation (CCF-1256087, CCF-1053918, and EF-0849899) and National Institutes of Health (1R21AI085376 and 1R21HG006913). C.K. received support as an Alfred P. Sloan Research Fellow.
 
+\bibliographystyle{plain}
+\bibliography{hexagraph}
 
 \end{document}
