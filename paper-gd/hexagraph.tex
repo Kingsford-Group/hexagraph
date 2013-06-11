@@ -184,7 +184,7 @@ The above procedure often draws a number of routes using the same edge of $R$. T
 
 \subsection{Example tiled layouts}
 
-Figure~\ref{fig:tree} shows the layout of a 50-node, random tree with a powerlaw degree distribution (computed via~\cite{networkx}). Of course, this graph is planar, and nearly all edges are satisfied by tile adjacencies. The layout is compact and readable. The long chain of degree-2 nodes at the root of the tree (nodes 0 through 13) remains visible, and the high-degree nodes (26, 24, 25) are easily recognizable. The ability to recognize this immediately as a tree, however, is somewhat sacrificed.
+Figure~\ref{fig:tree} shows the layout of a 50-node, random tree with a powerlaw degree distribution (computed via~\cite{networkx}). This graph is planar, and nearly all edges are satisfied by tile adjacencies. The layout is compact and readable. The long chain of degree-2 nodes at the root of the tree (nodes 0 through 13) remains visible, and the high-degree nodes (26, 24, 25) are easily recognizable. The ability to recognize this immediately as a tree, however, is somewhat sacrificed.
 
 \begin{figure}[t]
 \centering
@@ -217,13 +217,22 @@ The hexagonal tiling layout can produce very readable and attractive drawings, a
 
 
 
-\subsection{Spectral approximation to the quadratic assignment problem}
+%\subsection{Spectral approximation to the quadratic assignment problem}
 
 \subsection{Timing of the iterative linear assignment approach}
 
-\subsection{Quality of layout for near-planar graphs}
 
 %-----------------------------------------------------------------------
 \section{Conclusion}
+
+The use of tile adjacencies to represent edges has several advantages. The 
+first is that it reduces clutter by reducing the number of edges that must 
+be drawn. Secondly, 
+
+
+\section*{Acknowledgements}
+
+This work has been partially funded by National Science Foundation (CCF-1256087, CCF-1053918, and EF-0849899) and National Institutes of Health (1R21AI085376 and 1R21HG006913). C.K. received support as an Alfred P. Sloan Research Fellow.
+
 
 \end{document}

@@ -20,12 +20,12 @@ x2. weaken the requirement of adjacent => edge
     - fan graph
 4. limit # of routes passing through an edge
 5. look for bug in hypercube(5)
-6. local clean up / greedy improvement?
 7. color by embedding into a line
 8. offset routed edges (?)
 9. handle weighted edges (?)
 10. only iterate over "near" pairs of cells when doing distance matching
 
+x6. local clean up / greedy improvement?
 x3. add "border" before routing
 x11. only add distance requirement for single hop edges
 x12. color edges to avoid same color edges in a cell
@@ -204,7 +204,9 @@ def build_lap_graph(G, T, n2c, c2n, inertia):
             for d in T.neighbors(c).itervalues():
                 if d in c2n and c2n[d] != u:
                     if G.has_edge(c2n[d], u):    
-                        cost_cu += 1000
+                        e = G.edge[c2n[d]][u]
+                        w = e['weight'] if 'weight' in e else 1
+                        cost_cu += 1000 * w
                     else:
                         bad_count += 1
                         #cost_cu = None
@@ -361,7 +363,19 @@ def shift_layout(G, T, n2c):
             break
         n2c_down[u] = N['se']
 
-    # if we failed to shift it, we just dont' change anythign
+    # if we fail, just try to shift it down
+    if fail:
+        print 'fall back'
+        fail = False
+        n2c_down = {}
+        for u,c in n2c.iteritems():
+            N = T.neighbors(c)
+            if 's' not in N: 
+                fail = True
+                break
+            n2c_down[u] = N['s']
+
+    # if we still failed to shift it, we just dont' change anythign
     if fail:
         c2n = {c:u for u,c in n2c.iteritems()}
         return n2c, c2n
@@ -495,6 +509,9 @@ def float_islands(G, T, n2c, c2n):
                 #print "I=%d old=%s new=%s q=%f" % (I[1][0], str(I[0]), str(best_loc), best_quality)
             I[0] = best_loc
         i += 1
+
+    global StatsIslandPasses
+    StatsIslandPasses = i-1
 
     c2n = {c:u for u,c in n2c.iteritems()}
     return n2c, c2n
@@ -1126,11 +1143,13 @@ def print_layout_statistics(G, T, n2c):
     print "S Iterations:", StatsIterations
     print "S ColorsRequired:", StatColorsRequired
     print "S MaximumRouteDeg:", StatsMaxEdgeDeg
-    print "S Area:", area(T, n2c)
+    print "S IslandPasses:", StatsIslandPasses
+    print "S Area:", ' '.join(area(T, n2c))
     print "S TotalEucEdgeLen:", edge_stretch(G, T, n2c)
     print "S TotalCrossing:", StatsCrossing
     print "S TotalNonCrossing:", StatsNonCrossing
     print "S Time:", StatsTime
+
 
 def number_nodes(G):
     H = nx.Graph()
@@ -1153,8 +1172,12 @@ def main():
     #G = number_nodes(nx.read_gml(sys.argv[2]))
     #G = number_nodes(nx.florentine_families_graph())
     #G = number_nodes(nx.read_adjlist(sys.argv[2]))
-    print "S", name, sys.argv[2]
-    G = number_nodes(nx.read_gml(sys.argv[2]))
+    graphfile = sys.argv[2]
+    print "S", name, graphfile
+    if graphfile.endswith(".gml"):
+        G = number_nodes(nx.read_gml(graphfile))
+    else:
+        G = number_nodes(nx.read_edgelist(graphfile))
     nx.write_edgelist(G, name + "-in.graph")
     hex_layout(G, 15, 20, name + ".layout")
 
