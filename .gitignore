@@ -1,0 +1,11 @@
+*.aux
+*.bbl
+*.blg
+*.log
+*.synctex.gz
+*.swp
+hexagraph_processing/*.layout
+hexagraph_processing/hex.png
+src-layout/output
+routecolor.edg
+paper-gd/hexagraph.pdf
