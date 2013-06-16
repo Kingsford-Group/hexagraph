@@ -29,12 +29,12 @@ WWW home page: \texttt{http://www.cs.cmu.edu/\homedir ckingsf}
 %
 We present a method for drawing graphs that assigns nodes to tiles in a
 hexagonal planar tiling. Adjacencies of the tiles are used to represent node
-adjacencies in order to reduce the number of explicit edges that must be drawn.
+adjacencies in order to reduce the number of  edges that must be drawn explictly.
 We show how an alternative method of drawing the tiles can be used to relax the
 requirement that nodes assigned to touching tiles be adjacent in the input
 graph.  We present an approach to finding a layout that attempts to minimize the number
-of explicit edges drawn and to maximize other aesthetic qualities. The approach is based on
-the combination of several heuristics, the most central of which is the
+of explicit edges drawn and to maximize other aesthetic qualities. The approach is based 
+on the combination of several heuristics, the most central of which is the
 repeated solution of a maximum weighted bipartite matching to find a good
 assignment of nodes to tiles. The technique is shown to produce compact,
 readable drawings for sparse graphs.
@@ -92,7 +92,7 @@ edges, and permits the creation of very compact drawings.  While
 Problem~\ref{prob:1} could be defined for any planar tiling, this property of
 hexagonal tiling (and other tilings) makes it particularly attractive. They are also
 attractive because they are symmetric, fill the plane, and each tile has a
-relatively large number of adjacencies. Further, common motifs such as cliques,
+relatively large number of adjacencies (they are the largest regular polygon that tiles the plane). In addition, hexagons, if not constrained to a grid or uniform size are sufficient to represent any planar graph via adjacencies~\cite{thomassen}. Further, common motifs such as cliques,
 bicliques, and stars show up directly in the layout, and nodes with high
 clustering coefficient can also be seen as they will tend to have adjacent
 tiles that are also adjacent. 
@@ -105,9 +105,8 @@ suited to situations when local adjacencies are of more interest than global str
 To solve Problem~\ref{prob:1} without
 placing restrictions on the graph $G$ to be drawn, we develop an EM-like
 algorithm that iteratively solves linear assignment instances (maximum
-bipartite matching) to refine a mapping $f$ from vertices to tiles. A
-randomized approach that is used to avoid becoming trapped in local optima is
-presented and tested as well. We also test an approach to edge drawing and
+bipartite matching) to refine a mapping $f$ from vertices to tiles. We also present and test a
+randomized approach that is used to avoid becoming trapped in poor local optima. We also test an approach to edge drawing and
 coloring for edges that are not handled by tile adjacencies.
 
 \paragraph{Related work.} The tessellation representation of planar
@@ -119,7 +118,8 @@ nodes with the intersections and touching points of circles the arcs of the
 circles as edges~\cite{circles}. The visibility approach~\cite{TT86,vis96} to
 drawing graphs provides another alternative in which edges can be implicitly
 represented. Again, this approach has been restricted to planar graphs, and it can
-produce drawings that are inorganic or unintuitive to read. A similar iterative,
+produce drawings that are inorganic or unintuitive to read. Touching triangle graphs~\cite{touching} are the most similar to what we consider here: nodes are represented by triangles and edges by adjacencies of the triangles. There are are significant differences, however.  They have been applied to only some classes of graphs (outerplanar and some grid graphs); they do not support ``mixed'' drawings where some edges are not represented by triangle adjacencies; and the triangles do not form a tiling of the plane.
+Prior work on ``hexagonal grid drawings''~\cite{hexagrid} refers to something different than our hexagonal tiling layouts: a triangular grid is used to constrain the layout of a node-and-edge drawing where nodes are placed on grid points and edges trace grid edges. This aids in reducing the number of edge bends and has applications in VLSI layout.  A similar iterative,
 linear-assignment-based algorithm was given in~\cite{spin} for the different problem of finding
 good orderings of the rows and columns of a matrix. 
 
@@ -129,7 +129,7 @@ guarantees. Instead a number of algorithmic ideas are combined to produce a
 practical heuristic for laying out graphs using the tiling scheme described
 above. We show that in combination, these ideas can be applied to efficiently
 produce hexagonal tilings for non-planar, sparse graphs that are high-quality
-under several metrics such as small area, limited node-edge crossings, and a
+under several metrics such as small area, few node-edge crossings, and a
 large number of edges implicitly represented.
 
 \begin{figure}[t]\centering
@@ -191,7 +191,7 @@ their weights $w$ as follows.
 
 Let $\neighT(c)$ be the set of tiles that are adjacent to $c$.  A tile $c$ is
 \emph{blocked} for a node $u$ if there is some existing assignment to an
-adjacent tile of another node that is not an neighbor of $u$. In other words, a
+adjacent tile of another node that is not a neighbor of $u$. In other words, a
 tile $c$ is blocked for $u$ if there is a $v\in V$ such that $f(v) \in
 \neighT(c)$ but $\{u,v\}$ is not an edge of $G$.  Similarly, we say a tile is \emph{attractive} for $u$ if there is at
 least one $v\in V$ such that $f(v) \in \neighT(c)$ and $\{u,v\} \in E$. Such
@@ -221,9 +221,10 @@ for high-degree nodes will contain more terms. Equation~\ref{eqn:weight} is but
 one choice of possible weight function, and the algorithms below work for any
 positive-valued function, though the quality of the layouts may differ. If the
 edges $\{u,v\}$ of $G$ are weighted by their importance $i(u,v)$, the first term of~\eqref{eqn:weight}
-can be changed to include benefit $ri(u,v)$ for each satisfied edge. For the experiments reported here, we take $r=1000$
+can be changed to include benefit $ri(u,v)$ for each satisfied edge. For the experiments reported here, we set $r=1000$
 and $d(c,d) = 500 / h_{cd}$ where $h_{cd}$ is a Euclidean distance between the
-centers of tiles $c$ and $d$ divided by the hexagon radius.
+centers of tiles $c$ and $d$ divided by the hexagon radius (to make the units related to
+number of tiles crossed).
 
 \paragraph{Avoiding poor local minima.}
 
@@ -250,7 +251,7 @@ To overcome this, we run a second matching just for the nodes that were
 unmatched during the first round (line~\ref{a:unplaced}).  In this second
 matching, there are edges $(u,c)$ between a node $u$ and any tile $c$ that is
 not occupied or blocked for $u$ when fixing the assignments from the first
-matching. In this case, all the edge weights are $1$. Because the tiling field
+matching. In the experiments here, all the edge weights in this second matching are $1$, although more informative weights might be useful. Because the tiling field
 is chosen to be large enough, the maximum matching in this second graph will
 always include an assignment of every node to some tile.
 
@@ -270,8 +271,7 @@ continuous regions of the tiling that we will  move as a unit. To search for
 local improvements, each island $I$ is considered in turn, and every possible
 placement $I$ in the field of tiles is attempted while keeping the other
 islands fixed in place. A placement is rejected if it would cause two islands to overlap. $I$ is left in the place that maximizes the quality $q$
-of the resulting drawing, and the next island is considered. This process
-continues until every island is in its locally optimal location.
+of the resulting drawing, and the next island is considered. We repeatedly iterate through the islands until every island is in its locally optimal location for $q$ (because no island moves during a pass through the islands).
 
 For the experiments here, $q$ is taken to be the area of the drawing so that
 this local improvement step will tend to push islands together and create more
@@ -282,7 +282,7 @@ we have not yet implemented it.
 
 \begin{figure}[t]\centering
 %
-\includegraphics[width=0.3\textwidth]{hexagon_graph}
+\includegraphics[width=0.20\textwidth]{hexagon_graph}
 %
 \caption{Subgraph created for routing edges for each tile.}
 \label{fig:routeg}
@@ -304,12 +304,12 @@ through one.
 For every unsatisfied edge $\{u,v\}\in E$, we find the shortest path in $R$ that
 connects a vertex representing a side of tile $f(u)$ to a vertex representing a side of tile $f(v)$. The edge $\{u,v\}$
 is then drawn by interpolating a curve along this shortest path. This shortest path
-is called the \emph{route} of edge $\{u,v\}$. (We also
+is called the \emph{route} of edge $\{u,v\}$. We also
 experimented with a variant in which unsatisfied edges are routed in arbitrary
 order and once an edge of $R$ is used for a route, its weight is increased by a
 small amount; this tended to produce routes with complex and arbitrary curves,
 selected simply to avoid reusing an edge of $R$. Hence, in the layouts below,
-we allow arbitrary reuse of edges of $R$ without additional penalty.)
+we allow arbitrary reuse of edges of $R$ without additional penalty.
 
 \subsection{Coloring non-satisfied edges}
 
@@ -338,7 +338,7 @@ complex graph is drawn without edge crossings or node occlusion in a compact
 area.
 
 Figure~\ref{fig:tree} shows the layout of a 50-node, random tree with a
-powerlaw degree distribution (computed via~\cite{networkx}). This graph is
+power-law degree distribution (computed via~\cite{networkx}). This graph is
 planar, and nearly all edges are satisfied by tile adjacencies. The layout is
 compact and readable. The long chain of degree-2 nodes at the root of the tree
 (nodes 0 through 13) remains visible, and the high-degree nodes (26, 24, 25)
@@ -532,12 +532,12 @@ Graph                & $n$ & $m$
 \subsection{Timing of the iterative linear assignment approach}
 
 Table~\ref{tbl:time} gives running time information for the graphs of
-Table~\ref{tbl:qual}. The running times are fairly practical: most graphs of
+Table~\ref{tbl:qual}. Most graphs of
 $\approx 50$ nodes require around $5$ minutes of total computation time to
 produce a good layout. This requires the solution of between \VarLowIlapIter
 and \VarHighIlapIter maximum bipartite matching instances before the solution
 converges to a stable assignment. In addition, a local optimal is found
-typically after   only a very few passes through the islands. Even a graph of
+typically after only a very few passes through the islands. Even a graph of
 $483$ edges (\texttt{chrom10}) takes only $16$ minutes. These timings are
 evidence that the approach described above can be practical. However, the
 current code has not be optimized for speed: it is written in Python (using
@@ -549,8 +549,8 @@ be produced.
 %
 \caption{Number of iterations of the linear assignment procedure (LAP) and the
 greedy floating island improvements (Island), and the number of seconds for the
-entire layout to be computed on a 3.4~GHz iMac in Python. Numbers are averaged
-over $10$ randomized runs.}\label{tbl:time}
+entire layout to be computed on a 3.4~GHz iMac in Python. Averaged
+over $10$  runs.}\label{tbl:time}
 %
 \centering
 \begin{tabular}{lrr@{$\;\;$}rrr}
@@ -590,12 +590,13 @@ minimize the Euclidean distance between endpoints of unsatisfied nodes, but the
 Euclidean distance can be a poor approximation to the distance an edge would
 have to be routed around nodes. The length of routes could be incorporated into
 the assignment costs in the maximum bipartite matching at the expense of
-recomputing routes after each matching iteration.
+recomputing routes after each matching iteration. Improvements to the EM algorithm~\cite{em} could
+also be considered.
  
 We have shown that high-quality, readable, compact layouts that exploit node
 adjacency to display the existence of edges can be computed efficiently using a
 randomized, iterative linear assignment procedure, coupled with a local greedy
-improvement phase. These algorithms produce drawings are often produce very
+improvement phase. These algorithms produce drawings that are often  very
 readable and are particularly suited for sparse graphs. We hope that this
 general layout scheme will find uses in several application domains.
 
