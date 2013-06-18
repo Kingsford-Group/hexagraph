@@ -8,7 +8,6 @@ for f in sys.argv[2:]:
     with open(f) as inp:
         for line in inp:
             if line.startswith('S ' + var + ':'):
-                print line.strip()
                 s = line.strip().split()
                 L.append(float(s[2]))
 
